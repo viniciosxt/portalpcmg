@@ -3,306 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polícia Civil - Recrutamento</title>
-    <!-- Tailwind para Design -->
+    <title>Polícia Civil - Portal Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        body { background-color: #0f172a; color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .page-section { display: none; min-height: calc(100vh - 80px); padding-top: 100px; }
-        .page-section.active { display: block; }
-        .btn-primary { background-color: #0284c7; transition: all 0.2s; }
-        .btn-primary:hover { background-color: #0369a1; transform: translateY(-1px); }
-        input, textarea, select { background: #1e293b !important; color: white !important; border: 1px solid #334155 !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; overflow-x: hidden; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
+        .step-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .step-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-bar { transition: width 0.4s ease; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        textarea { resize: none; min-height: 120px; }
+        
+        .hero-image {
+            background: linear-gradient(45deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2)), url('https://images.unsplash.com/photo-1579208575657-c595a05383b7?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-    <!-- Navegação -->
-    <nav class="fixed top-0 w-full h-20 glass z-50 flex items-center px-6 justify-between">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-            <i class="fas fa-shield-halved text-sky-500 text-3xl"></i>
-            <div>
-                <h1 class="font-bold text-xl leading-none">POLÍCIA CIVIL</h1>
-                <span class="text-[10px] text-sky-400 tracking-widest uppercase">Divisão de Operações</span>
+    <!-- Header -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                    <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center border-2 border-sky-400">
+                        <i class="fas fa-shield-halved text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg tracking-tighter text-white">POLÍCIA CIVIL</h1>
+                        <p class="text-[8px] text-sky-400 font-bold tracking-widest uppercase">Portal de Recrutamento</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button onclick="showSection('home')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Início</button>
+                    <button onclick="showSection('concursos')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Concursos</button>
+                    <button onclick="showSection('resultados')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-sm font-bold btn-hover border border-slate-600 text-white">
+                        <i class="fas fa-list-check mr-2"></i>Resultados
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="flex gap-4">
-            <button onclick="navigateTo('home')" class="text-sm font-medium hover:text-sky-400">Início</button>
-            <button onclick="navigateTo('concursos')" class="text-sm font-medium hover:text-sky-400">Concursos</button>
-            <button onclick="navigateTo('resultados')" class="bg-sky-600 px-4 py-2 rounded text-sm font-bold">Resultados</button>
         </div>
     </nav>
 
-    <!-- Seção: Home -->
-    <section id="home" class="page-section active px-6">
-        <div class="max-w-4xl mx-auto text-center mt-20">
-            <h2 class="text-5xl font-extrabold mb-6">Servir e <span class="text-sky-500">Proteger.</span></h2>
-            <p class="text-gray-400 text-lg mb-10">Portal oficial de recrutamento para a Divisão Operacional Aérea (D.O.A). Inicie sua carreira na elite da Polícia Civil.</p>
-            <button onclick="navigateTo('concursos')" class="btn-primary px-8 py-4 rounded-xl font-bold text-lg shadow-lg">Ver Editais Disponíveis</button>
-        </div>
-    </section>
-
-    <!-- Seção: Concursos -->
-    <section id="concursos" class="page-section px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8">Editais <span class="text-sky-500">Abertos</span></h2>
-            <div class="glass p-6 rounded-2xl flex justify-between items-center">
-                <div>
-                    <h3 class="text-xl font-bold">Recrutamento D.O.A 2024</h3>
-                    <p class="text-gray-400 text-sm">Vagas para Piloto e Operador Tático</p>
+    <!-- Home Section -->
+    <section id="home-section" class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <span class="text-sky-400 font-bold tracking-widest text-sm uppercase">Unidade de Inteligência</span>
+                <h2 class="text-5xl md:text-7xl font-black mt-4 leading-tight text-white">Carreira Policial <br><span class="gradient-text">Inicia Aqui.</span></h2>
+                <p class="mt-6 text-gray-400 text-lg leading-relaxed">
+                    Acesse os editais abertos, realize sua inscrição para a D.O.A e acompanhe sua classificação em tempo real através do nosso sistema integrado.
+                </p>
+                <div class="mt-10 flex flex-wrap gap-4">
+                    <button onclick="showSection('concursos')" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-4 rounded-xl font-bold btn-hover flex items-center gap-2 text-lg">
+                        Ver Editais Abertos <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
-                <button onclick="startForm()" class="btn-primary px-6 py-3 rounded-lg font-bold">Fazer Prova</button>
+            </div>
+            <div class="order-1 md:order-2">
+                <div class="w-full aspect-video md:aspect-square hero-image rounded-3xl shadow-2xl relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <div class="flex items-center gap-2 text-sky-400 font-bold text-sm mb-1">
+                            <i class="fas fa-helicopter animate-pulse"></i> DIVISÃO OPERACIONAL
+                        </div>
+                        <div class="text-white font-bold">Unidade Aérea - Águia</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção: Prova (Formulário) -->
-    <section id="prova" class="page-section px-6">
-        <div class="max-w-2xl mx-auto glass p-8 rounded-2xl shadow-2xl mb-20">
-            <div id="form-container">
-                <!-- O conteúdo do formulário será gerado via JS -->
-            </div>
-            
-            <div class="flex justify-between mt-8 border-t border-slate-700 pt-6">
-                <button id="btn-voltar" class="text-gray-400 font-bold hidden" onclick="changeQuestion(-1)">Anterior</button>
-                <button id="btn-proximo" class="btn-primary px-8 py-3 rounded-lg font-bold ml-auto" onclick="changeQuestion(1)">Próximo</button>
-                <button id="btn-enviar" class="bg-green-600 hover:bg-green-500 px-8 py-3 rounded-lg font-bold hidden" onclick="submitFinal()">Enviar Respostas</button>
+    <!-- Concursos Section -->
+    <section id="concursos-section" class="hidden pt-32 pb-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="glass p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 border-l-8 border-l-sky-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center"><i class="fas fa-helicopter text-sky-400 text-3xl"></i></div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">D.O.A - Divisão Operacional Aérea</h3>
+                        <p class="text-gray-400">Processo Seletivo D.O.A - Edital 2024</p>
+                    </div>
+                </div>
+                <button onclick="startExam()" class="bg-sky-600 hover:bg-sky-500 text-white px-10 py-4 rounded-xl font-bold btn-hover">Inscrever-se</button>
             </div>
         </div>
     </section>
 
-    <!-- Seção: Resultados -->
-    <section id="resultados" class="page-section px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8">Classificação <span class="text-sky-400">Geral</span></h2>
-            <div class="glass rounded-xl overflow-hidden">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-800">
+    <!-- Resultados Section -->
+    <section id="resultados-section" class="hidden pt-32 pb-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-4xl font-black mb-10 text-white">Classificação <span class="text-sky-400">Geral</span></h2>
+            <div class="glass rounded-3xl overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-800/50">
                         <tr>
-                            <th class="p-4">Candidato</th>
-                            <th class="p-4 text-center">Nota</th>
-                            <th class="p-4 text-right">Status</th>
+                            <th class="p-5 text-sky-400 uppercase text-xs">Posição</th>
+                            <th class="p-5 text-sky-400 uppercase text-xs">Candidato</th>
+                            <th class="p-5 text-sky-400 uppercase text-xs text-center">Pontos</th>
+                            <th class="p-5 text-sky-400 uppercase text-xs text-right">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="lista-resultados">
-                        <!-- Resultados carregados via Firebase -->
-                        <tr><td colspan="3" class="p-8 text-center text-gray-500">Carregando dados...</td></tr>
+                    <tbody id="results-table-body">
+                        <tr><td colspan="4" class="p-10 text-center text-gray-500">Aguardando autenticação segura...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 
-    <!-- Modal Sucesso -->
-    <div id="modal-sucesso" class="fixed inset-0 bg-black/90 z-[100] hidden flex items-center justify-center p-4">
-        <div class="glass p-10 rounded-3xl max-w-sm w-full text-center">
-            <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
-            <h3 class="text-2xl font-bold mb-2">Sucesso!</h3>
-            <p class="text-gray-400 mb-6">Sua prova foi enviada para análise.</p>
-            <button onclick="navigateTo('resultados')" class="btn-primary w-full py-3 rounded-lg font-bold">Ver Ranking</button>
+    <!-- Exam Section -->
+    <section id="exam-section" class="hidden pt-32 pb-20 px-6">
+        <div class="max-w-2xl mx-auto">
+            <div class="glass p-10 rounded-3xl shadow-2xl">
+                <p class="text-sm text-gray-400 mb-2 font-bold uppercase tracking-widest" id="step-indicator">Pergunta 1 de 12</p>
+                <div class="w-full bg-slate-700 h-1.5 rounded-full mb-10 overflow-hidden">
+                    <div id="progress-bar" class="progress-bar bg-sky-500 h-full w-0"></div>
+                </div>
+                <div id="questions-container"></div>
+                <div class="flex justify-between mt-12 pt-8 border-t border-slate-700/50">
+                    <button type="button" id="prev-btn" onclick="prevStep()" class="hidden text-gray-400 hover:text-white font-bold transition-all">Anterior</button>
+                    <div class="flex-1"></div>
+                    <button type="button" id="next-btn" onclick="nextStep()" class="bg-sky-600 hover:bg-sky-500 text-white px-10 py-3 rounded-xl font-bold btn-hover">Próxima</button>
+                    <button type="button" id="submit-btn" onclick="submitExam()" class="hidden bg-green-600 hover:bg-green-500 text-white px-10 py-3 rounded-xl font-bold btn-hover">Enviar Prova</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6 backdrop-blur-sm">
+        <div class="glass max-w-md w-full p-10 rounded-3xl text-center border-t-4 border-t-green-500">
+            <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-lg"><i class="fas fa-check"></i></div>
+            <h3 class="text-2xl font-bold mb-2 text-white">Protocolo Recebido!</h3>
+            <p class="text-gray-400 mb-6 text-sm">Suas respostas foram processadas e armazenadas no sistema central da Polícia Civil.</p>
+            <button onclick="showSection('resultados'); hideModal();" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-4 rounded-xl font-bold transition-all">Ver Classificação</button>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Configuração
+        // Firebase Configuração Global
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "", 
-            authDomain: "base-d053f.firebaseapp.com",
-            projectId: "base-d053f",
-            storageBucket: "base-d053f.firebasestorage.app",
-            messagingSenderId: "72644640420",
-            appId: "1:72644640420:web:ae28ae4a3579b18bcdf031"
+          apiKey: "", 
+          authDomain: "base-d053f.firebaseapp.com",
+          projectId: "base-d053f",
+          storageBucket: "base-d053f.firebasestorage.app",
+          messagingSenderId: "72644640420",
+          appId: "1:72644640420:web:ae28ae4a3579b18bcdf031"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-pc-v1';
         
-        // Caminho da coleção (OBRIGATÓRIO PARA O CANVAS)
-        const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'candidatos');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-pc-rp';
+        // Path fixo exigido pelas regras de segurança
+        const collectionPath = `artifacts/${appId}/public/data/provas_doa`;
+        const docRef = collection(db, collectionPath);
 
-        // Estado do App
-        let currentUser = null;
-        let currentIdx = 0;
-        let answers = {};
-        
+        let currentStep = 0;
+        let userAnswers = {};
+        let user = null;
+
         const questions = [
-            { id: 0, label: "Nome Completo (RP):", type: "text" },
-            { id: 1, label: "Passaporte (ID):", type: "text" },
-            { id: 2, label: "Qual altitude média do Águia em patrulhamento?", type: "select", options: ["10m", "150m-200m", "500m"], correct: "150m-200m" },
-            { id: 3, label: "O que significa Código 3?", type: "select", options: ["Patrulhamento de rotina", "Prioridade Máxima", "Retorno à base"], correct: "Prioridade Máxima" },
-            { id: 4, label: "Descreva o procedimento em caso de pane no motor:", type: "textarea" }
+            { id: 1, label: "Nome Completo (RP):", type: "text", correct: null },
+            { 
+                id: 2, 
+                label: "Em perseguição urbana de alto risco, qual altitude deve ser mantida pelo Águia?", 
+                type: "select", 
+                options: ["Baixa altitude (10m)", "Média altitude (150m-200m)", "Alta altitude (500m+)", "Variação constante"], 
+                correct: "Média altitude (150m-200m)" 
+            },
+            { 
+                id: 3, 
+                label: "O Código 3 na aviação policial indica prioridade máxima. Quais sinais são obrigatórios?", 
+                type: "select", 
+                options: ["Luzes de navegação", "Apenas farol de busca", "Giroflex e rádio constante", "Sigilo total"], 
+                correct: "Giroflex e rádio constante" 
+            },
+            { 
+                id: 4, 
+                label: "O suspeito entra em um túnel. Qual o procedimento padrão do Operador?", 
+                type: "select", 
+                options: ["Pousar na entrada", "Informar via rádio e cercar a saída", "Entrar no túnel", "Abandonar"], 
+                correct: "Informar via rádio e cercar a saída" 
+            },
+            { 
+                id: 5, 
+                label: "O que significa 'Mayday' emitido por uma aeronave?", 
+                type: "select", 
+                options: ["Combustível baixo", "Perigo grave e iminente", "Pane leve", "Pedido de pouso"], 
+                correct: "Perigo grave e iminente" 
+            },
+            { 
+                id: 6, 
+                label: "Qual a função primária do Operador Tático?", 
+                type: "select", 
+                options: ["Apenas pilotar", "Comunicação rádio e câmera/farol", "Olhar o mapa", "Disparar sem aviso"], 
+                correct: "Comunicação rádio e câmera/farol" 
+            },
+            { 
+                id: 7, 
+                label: "Sobre disparos de precisão da aeronave, qual a regra?", 
+                type: "select", 
+                options: ["Liberado sempre", "Proibido sempre", "Autorização superior ou legítima defesa", "Liberado em colisões"], 
+                correct: "Autorização superior ou legítima defesa" 
+            },
+            { 
+                id: 8, 
+                label: "Em caso de pane total de motor, onde priorizar o pouso?", 
+                type: "select", 
+                options: ["Avenida movimentada", "Áreas abertas e sem civis", "Topo de prédios", "Qualquer local"], 
+                correct: "Áreas abertas e sem civis" 
+            },
+            { 
+                id: 9, 
+                label: "Quem detém a palavra final sobre a segurança do voo?", 
+                type: "select", 
+                options: ["Candidato", "Comandante da Aeronave", "Policial de maior patente em terra", "Operador de rádio"], 
+                correct: "Comandante da Aeronave" 
+            },
+            { 
+                id: 10, 
+                label: "Como deve ser a comunicação rádio ideal?", 
+                type: "select", 
+                options: ["Falar muito", "Frases longas", "Clara, rápida e objetiva (Cód. Q)", "Falar no final"], 
+                correct: "Clara, rápida e objetiva (Cód. Q)" 
+            },
+            { 
+                id: 11, 
+                label: "QUESTÃO ABERTA: Justifique por que você deseja ingressar na D.O.A. e qual o diferencial do seu trabalho.", 
+                type: "textarea", 
+                correct: null 
+            },
+            { 
+                id: 12, 
+                label: "QUESTÃO ABERTA: Descreva detalhadamente o procedimento ao avistar um veículo em fuga após um roubo.", 
+                type: "textarea", 
+                correct: null 
+            }
         ];
 
-        // --- Funções Globais (Anexadas ao window para funcionar no HTML) ---
-
-        window.navigateTo = (sectionId) => {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            if(sectionId === 'resultados') window.hideModal();
+        // Global functions
+        window.showSection = (id) => {
+            const sections = ['home', 'concursos', 'resultados', 'exam'];
+            sections.forEach(s => {
+                const el = document.getElementById(`${s}-section`);
+                if(el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(`${id}-section`);
+            if(target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         };
 
-        window.startForm = () => {
-            currentIdx = 0;
-            answers = {};
-            window.navigateTo('prova');
-            renderCurrentQuestion();
+        window.startExam = () => { 
+            if(!user) return; // Prevent start without auth
+            currentStep = 0; 
+            userAnswers = {}; 
+            window.showSection('exam'); 
+            renderQuestions(); 
+            updateStep(); 
         };
 
-        window.hideModal = () => document.getElementById('modal-sucesso').classList.add('hidden');
+        window.hideModal = () => {
+            const modal = document.getElementById('success-modal');
+            if(modal) modal.classList.add('hidden');
+        };
 
-        function renderCurrentQuestion() {
-            const container = document.getElementById('form-container');
-            const q = questions[currentIdx];
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            if(!container) return;
+            container.innerHTML = '';
+            questions.forEach((q, index) => {
+                const div = document.createElement('div');
+                div.id = `step-${index}`;
+                div.className = `step-content ${index === 0 ? 'active' : ''}`;
+                let html = `<h4 class="text-xl font-bold mb-6 text-white">${q.label}</h4>`;
+                
+                if(q.type === 'text') {
+                    html += `<input type="text" id="ans-${index}" placeholder="Digite aqui..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl outline-none focus:border-sky-500 text-white transition-all">`;
+                } else if(q.type === 'textarea') {
+                    html += `<textarea id="ans-${index}" placeholder="Sua resposta detalhada..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl outline-none focus:border-sky-500 text-white transition-all"></textarea>`;
+                } else {
+                    q.options.forEach(opt => {
+                        html += `
+                        <label class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 mb-3 cursor-pointer hover:bg-slate-800 hover:border-sky-500 transition-all group">
+                            <input type="radio" name="q-${index}" value="${opt}" class="w-4 h-4 accent-sky-500">
+                            <span class="group-hover:text-white">${opt}</span>
+                        </label>`;
+                    });
+                }
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+        }
+
+        function updateStep() {
+            document.querySelectorAll('.step-content').forEach((el, i) => {
+                el.classList.toggle('active', i === currentStep);
+            });
             
-            let inputHtml = "";
-            if(q.type === 'text') {
-                inputHtml = `<input type="text" id="q-input" value="${answers[currentIdx] || ''}" class="w-full p-4 rounded-lg outline-none focus:ring-2 focus:ring-sky-500">`;
-            } else if(q.type === 'textarea') {
-                inputHtml = `<textarea id="q-input" class="w-full p-4 rounded-lg min-h-[150px] outline-none focus:ring-2 focus:ring-sky-500">${answers[currentIdx] || ''}</textarea>`;
-            } else if(q.type === 'select') {
-                inputHtml = q.options.map(opt => `
-                    <label class="block p-4 mb-3 rounded-lg border border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors">
-                        <input type="radio" name="q-radio" value="${opt}" ${answers[currentIdx] === opt ? 'checked' : ''} class="mr-3">
-                        ${opt}
-                    </label>
-                `).join('');
-            }
+            const indicator = document.getElementById('step-indicator');
+            const progressBar = document.getElementById('progress-bar');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
 
-            container.innerHTML = `
-                <span class="text-sky-500 font-bold text-xs uppercase tracking-widest">Passo ${currentIdx + 1} de ${questions.length}</span>
-                <h3 class="text-2xl font-bold mt-2 mb-6">${q.label}</h3>
-                <div id="input-wrapper">${inputHtml}</div>
-            `;
-
-            updateButtons();
+            if(indicator) indicator.innerText = `Pergunta ${currentStep + 1} de ${questions.length}`;
+            if(progressBar) progressBar.style.width = `${((currentStep+1)/questions.length)*100}%`;
+            
+            if(prevBtn) prevBtn.classList.toggle('hidden', currentStep === 0);
+            if(nextBtn) nextBtn.classList.toggle('hidden', currentStep === questions.length - 1);
+            if(submitBtn) submitBtn.classList.toggle('hidden', currentStep !== questions.length - 1);
         }
 
-        function updateButtons() {
-            document.getElementById('btn-voltar').classList.toggle('hidden', currentIdx === 0);
-            document.getElementById('btn-proximo').classList.toggle('hidden', currentIdx === questions.length - 1);
-            document.getElementById('btn-enviar').classList.toggle('hidden', currentIdx !== questions.length - 1);
-        }
-
-        window.changeQuestion = (direction) => {
-            // Salva resposta atual antes de mudar
-            const q = questions[currentIdx];
-            if(q.type === 'select') {
-                const selected = document.querySelector('input[name="q-radio"]:checked');
-                answers[currentIdx] = selected ? selected.value : "";
+        function saveCurrentAnswer() {
+            const q = questions[currentStep];
+            if(q.type === 'text' || q.type === 'textarea') {
+                const el = document.getElementById(`ans-${currentStep}`);
+                userAnswers[currentStep] = el ? el.value.trim() : "";
             } else {
-                answers[currentIdx] = document.getElementById('q-input').value;
+                const sel = document.querySelector(`input[name="q-${currentStep}"]:checked`);
+                userAnswers[currentStep] = sel ? sel.value : "";
             }
+        }
 
-            currentIdx += direction;
-            renderCurrentQuestion();
+        window.nextStep = () => {
+            saveCurrentAnswer();
+            if(currentStep < questions.length - 1) {
+                currentStep++; 
+                updateStep();
+            }
         };
 
-        window.submitFinal = async () => {
-            // Salva a última
-            const q = questions[currentIdx];
-            if(q.type === 'select') {
-                const selected = document.querySelector('input[name="q-radio"]:checked');
-                answers[currentIdx] = selected ? selected.value : "";
-            } else {
-                answers[currentIdx] = document.getElementById('q-input').value;
+        window.prevStep = () => { 
+            saveCurrentAnswer();
+            if(currentStep > 0) {
+                currentStep--; 
+                updateStep(); 
             }
+        };
 
-            if(!currentUser) {
-                alert("Erro: Conexão com o servidor não estabelecida. Tente em 5 segundos.");
+        window.submitExam = async () => {
+            if (!user) return;
+            saveCurrentAnswer();
+
+            if(!userAnswers[0]) {
+                const el = document.getElementById('ans-0');
+                if(el) el.focus();
                 return;
             }
 
-            const btn = document.getElementById('btn-enviar');
+            const btn = document.getElementById('submit-btn');
             btn.disabled = true;
-            btn.innerText = "Enviando...";
+            btn.innerHTML = `<i class="fas fa-spinner animate-spin mr-2"></i> Enviando...`;
 
-            // Cálculo simples de nota para as objetivas
             let acertos = 0;
-            let totalObj = 0;
-            questions.forEach((question, i) => {
-                if(question.correct) {
-                    totalObj++;
-                    if(answers[i] === question.correct) acertos++;
+            let totalAuto = 0;
+            questions.forEach((q, i) => { 
+                if(q.correct) {
+                    totalAuto++;
+                    if(userAnswers[i] === q.correct) acertos++; 
                 }
             });
-            const nota = totalObj > 0 ? Math.round((acertos / totalObj) * 100) : 100;
+            
+            const score = totalAuto > 0 ? Math.round((acertos / totalAuto) * 100) : 0;
 
             try {
-                await addDoc(colRef, {
-                    nome: answers[0] || "Sem Nome",
-                    passaporte: answers[1] || "0",
-                    nota: nota,
-                    respostas: answers,
+                await addDoc(docRef, {
+                    nome: userAnswers[0] || "Candidato Anônimo",
+                    taxa: score,
+                    abertas: { 
+                        q11: userAnswers[10] || "Sem resposta", 
+                        q12: userAnswers[11] || "Sem resposta" 
+                    },
                     data: serverTimestamp(),
-                    uid: currentUser.uid
+                    userId: user.uid
                 });
                 
-                document.getElementById('modal-sucesso').classList.remove('hidden');
-            } catch (err) {
-                console.error(err);
-                alert("Erro ao salvar! Tente novamente.");
+                const modal = document.getElementById('success-modal');
+                if(modal) modal.classList.remove('hidden');
+                
+            } catch (e) { 
+                console.error("Erro ao salvar prova:", e);
             } finally {
-                btn.disabled = false;
-                btn.innerText = "Enviar Respostas";
+                btn.disabled = false; 
+                btn.innerText = "Enviar Prova";
             }
         };
 
-        // --- Inicialização e Auth ---
-
         async function init() {
-            // Login anônimo para poder gravar no Firestore
+            // Regra 3: Autenticar PRIMEIRO e aguardar
             try {
-                const cred = await signInAnonymously(auth);
-                currentUser = cred.user;
-                
-                // Listener de Resultados
-                onSnapshot(colRef, (snap) => {
-                    const list = [];
-                    snap.forEach(doc => list.push(doc.data()));
-                    
-                    // Ordenar por nota
-                    list.sort((a,b) => b.nota - a.nota);
-                    
-                    const tbody = document.getElementById('lista-resultados');
-                    if(list.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="3" class="p-8 text-center text-gray-500">Nenhum candidato inscrito ainda.</td></tr>';
-                        return;
-                    }
-
-                    tbody.innerHTML = list.map(item => `
-                        <tr class="border-b border-slate-700/50 hover:bg-slate-800 transition-colors">
-                            <td class="p-4">
-                                <div class="font-bold">${item.nome}</div>
-                                <div class="text-[10px] text-gray-500">ID: ${item.passaporte}</div>
-                            </td>
-                            <td class="p-4 text-center">
-                                <span class="text-sky-400 font-bold text-lg">${item.nota}</span>
-                            </td>
-                            <td class="p-4 text-right">
-                                <span class="px-2 py-1 rounded text-[10px] font-bold ${item.nota >= 70 ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}">
-                                    ${item.nota >= 70 ? 'APROVADO' : 'EM ANÁLISE'}
-                                </span>
-                            </td>
-                        </tr>
-                    `).join('');
-                }, (err) => console.error("Erro no Listener:", err));
-
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
             } catch (err) {
-                console.error("Erro de Autenticação:", err);
+                console.error("Erro na autenticação:", err);
+                return;
             }
+
+            // Escutar mudanças de estado de auth
+            onAuthStateChanged(auth, (loggedUser) => {
+                user = loggedUser;
+                if (user) {
+                    setupListeners();
+                }
+            });
         }
 
+        function setupListeners() {
+            // Apenas inicia leitura após ter usuário
+            onSnapshot(docRef, (snap) => {
+                const results = [];
+                snap.forEach(doc => results.push(doc.data()));
+                
+                // Ordenação em memória (Regra 2: Sem filtros complexos no Firestore)
+                results.sort((a,b) => (b.taxa || 0) - (a.taxa || 0));
+                
+                const tbody = document.getElementById('results-table-body');
+                if(tbody) {
+                    tbody.innerHTML = results.map((r, i) => `
+                        <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                            <td class="p-5 font-mono text-gray-500">#${i+1}</td>
+                            <td class="p-5">
+                                <div class="font-bold text-white">${r.nome}</div>
+                                <div class="text-[10px] text-gray-500 uppercase">D.O.A - Candidato</div>
+                            </td>
+                            <td class="p-5 text-center text-sky-400 font-bold">${r.taxa}%</td>
+                            <td class="p-5 text-right font-bold ${r.taxa >= 70 ? 'text-green-500' : 'text-red-500'}">
+                                ${r.taxa >= 70 ? 'APROVADO' : 'REPROVADO'}
+                            </td>
+                        </tr>
+                    `).join('') || '<tr><td colspan="4" class="p-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>';
+                }
+            }, (err) => {
+                console.error("Erro de permissão ou leitura:", err);
+                const tbody = document.getElementById('results-table-body');
+                if(tbody) tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400">Erro de permissão no banco de dados.</td></tr>`;
+            });
+        }
+        
         init();
     </script>
 </body>
