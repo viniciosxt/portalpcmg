@@ -1,400 +1,862 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polícia Civil - Portal Oficial</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Portal de Recrutamento - PCMG RP</title>
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel (Para compilar o JSX diretamente no browser) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f1f5f9; overflow-x: hidden; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
-        .step-content { display: none; animation: fadeIn 0.4s ease-out; }
-        .step-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .progress-bar { transition: width 0.4s ease; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        textarea { resize: none; min-height: 120px; }
-        
-        .hero-image {
-            background: linear-gradient(45deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2)), url('https://images.unsplash.com/photo-1579208575657-c595a05383b7?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        /* Estilos base do Tailwind para o Body */
+        body { margin: 0; background-color: #121214; color: #e2e8f0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
+    <div id="root"></div>
 
-    <!-- Header -->
-    <nav class="fixed w-full z-50 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
-                    <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center border-2 border-sky-400">
-                        <i class="fas fa-shield-halved text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-extrabold text-lg tracking-tighter text-white">POLÍCIA CIVIL</h1>
-                        <p class="text-[8px] text-sky-400 font-bold tracking-widest uppercase">Portal de Recrutamento</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-6">
-                    <button onclick="showSection('home')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Início</button>
-                    <button onclick="showSection('concursos')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Concursos</button>
-                    <button onclick="showSection('resultados')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-sm font-bold btn-hover border border-slate-600 text-white">
-                        <i class="fas fa-list-check mr-2"></i>Resultados
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <script type="text/babel">
+        const { useState } = React;
 
-    <!-- Home Section -->
-    <section id="home-section" class="pt-32 pb-20 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-                <span class="text-sky-400 font-bold tracking-widest text-sm uppercase">Unidade de Inteligência</span>
-                <h2 class="text-5xl md:text-7xl font-black mt-4 leading-tight text-white">Carreira Policial <br><span class="gradient-text">Inicia Aqui.</span></h2>
-                <p class="mt-6 text-gray-400 text-lg leading-relaxed">
-                    Acesse os editais abertos, realize sua inscrição para a D.O.A e acompanhe sua classificação em tempo real através do nosso sistema integrado.
-                </p>
-                <div class="mt-10 flex flex-wrap gap-4">
-                    <button onclick="showSection('concursos')" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-4 rounded-xl font-bold btn-hover flex items-center gap-2 text-lg">
-                        Ver Editais Abertos <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="order-1 md:order-2">
-                <div class="w-full aspect-video md:aspect-square hero-image rounded-3xl shadow-2xl relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <div class="flex items-center gap-2 text-sky-400 font-bold text-sm mb-1">
-                            <i class="fas fa-helicopter animate-pulse"></i> DIVISÃO OPERACIONAL
-                        </div>
-                        <div class="text-white font-bold">Unidade Aérea - Águia</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        // ==========================================
+        // ÍCONES CUSTOMIZADOS
+        // ==========================================
+        const IconBase = ({ children, className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {children}
+            </svg>
+        );
 
-    <!-- Concursos Section -->
-    <section id="concursos-section" class="hidden pt-32 pb-20 px-6">
-        <div class="max-w-5xl mx-auto">
-            <div class="glass p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 border-l-8 border-l-sky-500">
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center"><i class="fas fa-helicopter text-sky-400 text-3xl"></i></div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-white">D.O.A - Divisão Operacional Aérea</h3>
-                        <p class="text-gray-400">Processo Seletivo D.O.A - Edital 2024</p>
-                    </div>
-                </div>
-                <button onclick="startExam()" class="bg-sky-600 hover:bg-sky-500 text-white px-10 py-4 rounded-xl font-bold btn-hover">Inscrever-se</button>
-            </div>
-        </div>
-    </section>
+        const Shield = (props) => <IconBase {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></IconBase>;
+        const ChevronRight = (props) => <IconBase {...props}><polyline points="9 18 15 12 9 6"/></IconBase>;
+        const CheckCircle = (props) => <IconBase {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></IconBase>;
+        const XCircle = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></IconBase>;
+        const AlertTriangle = (props) => <IconBase {...props}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></IconBase>;
+        const ArrowRight = (props) => <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></IconBase>;
+        const ListIcon = (props) => <IconBase {...props}><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></IconBase>;
+        const Award = (props) => <IconBase {...props}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></IconBase>;
+        const Search = (props) => <IconBase {...props}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></IconBase>;
+        const FileText = (props) => <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></IconBase>;
 
-    <!-- Resultados Section -->
-    <section id="resultados-section" class="hidden pt-32 pb-20 px-6">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-black mb-10 text-white">Classificação <span class="text-sky-400">Geral</span></h2>
-            <div class="glass rounded-3xl overflow-hidden">
-                <table class="w-full text-left">
-                    <thead class="bg-slate-800/50">
-                        <tr>
-                            <th class="p-5 text-sky-400 uppercase text-xs">Posição</th>
-                            <th class="p-5 text-sky-400 uppercase text-xs">Candidato</th>
-                            <th class="p-5 text-sky-400 uppercase text-xs text-center">Pontos</th>
-                            <th class="p-5 text-sky-400 uppercase text-xs text-right">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="results-table-body">
-                        <tr><td colspan="4" class="p-10 text-center text-gray-500">Aguardando autenticação segura...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+        const Helicopter = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M3 15h18" />
+                <path d="M12 3v3" />
+                <path d="M2 6h20" />
+                <path d="M12 6v5" />
+                <path d="M6 11h11a2 2 0 0 1 2 2v2H5v-2a2 2 0 0 1 1-2z" />
+                <path d="M7 15v3" />
+                <path d="M17 15v3" />
+                <path d="M5 18h14" />
+            </svg>
+        );
 
-    <!-- Exam Section -->
-    <section id="exam-section" class="hidden pt-32 pb-20 px-6">
-        <div class="max-w-2xl mx-auto">
-            <div class="glass p-10 rounded-3xl shadow-2xl">
-                <p class="text-sm text-gray-400 mb-2 font-bold uppercase tracking-widest" id="step-indicator">Pergunta 1 de 12</p>
-                <div class="w-full bg-slate-700 h-1.5 rounded-full mb-10 overflow-hidden">
-                    <div id="progress-bar" class="progress-bar bg-sky-500 h-full w-0"></div>
-                </div>
-                <div id="questions-container"></div>
-                <div class="flex justify-between mt-12 pt-8 border-t border-slate-700/50">
-                    <button type="button" id="prev-btn" onclick="prevStep()" class="hidden text-gray-400 hover:text-white font-bold transition-all">Anterior</button>
-                    <div class="flex-1"></div>
-                    <button type="button" id="next-btn" onclick="nextStep()" class="bg-sky-600 hover:bg-sky-500 text-white px-10 py-3 rounded-xl font-bold btn-hover">Próxima</button>
-                    <button type="button" id="submit-btn" onclick="submitExam()" class="hidden bg-green-600 hover:bg-green-500 text-white px-10 py-3 rounded-xl font-bold btn-hover">Enviar Prova</button>
-                </div>
-            </div>
-        </div>
-    </section>
+        const MGTriangle = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" className={className}>
+                <polygon points="50,10 95,90 5,90" />
+            </svg>
+        );
 
-    <!-- Success Modal -->
-    <div id="success-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6 backdrop-blur-sm">
-        <div class="glass max-w-md w-full p-10 rounded-3xl text-center border-t-4 border-t-green-500">
-            <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-lg"><i class="fas fa-check"></i></div>
-            <h3 class="text-2xl font-bold mb-2 text-white">Protocolo Recebido!</h3>
-            <p class="text-gray-400 mb-6 text-sm">Suas respostas foram processadas e armazenadas no sistema central da Polícia Civil.</p>
-            <button onclick="showSection('resultados'); hideModal();" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-4 rounded-xl font-bold transition-all">Ver Classificação</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Firebase Configuração Global
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-          apiKey: "", 
-          authDomain: "base-d053f.firebaseapp.com",
-          projectId: "base-d053f",
-          storageBucket: "base-d053f.firebasestorage.app",
-          messagingSenderId: "72644640420",
-          appId: "1:72644640420:web:ae28ae4a3579b18bcdf031"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-pc-rp';
-        const collectionPath = `artifacts/${appId}/public/data/provas_doa`;
-        const docRef = collection(db, collectionPath);
-
-        let currentStep = 0;
-        let userAnswers = {};
-        let user = null;
-
-        const questions = [
-            { id: 1, label: "Nome Completo (RP):", type: "text", correct: null },
-            { id: 2, label: "Em perseguição urbana de alto risco, qual altitude deve ser mantida pelo Águia?", type: "select", options: ["Baixa altitude (10m)", "Média altitude (150m-200m)", "Alta altitude (500m+)", "Variação constante"], correct: "Média altitude (150m-200m)" },
-            { id: 3, label: "O Código 3 na aviação policial indica prioridade máxima. Quais sinais são obrigatórios?", type: "select", options: ["Luzes de navegação", "Apenas farol de busca", "Giroflex e rádio constante", "Sigilo total"], correct: "Giroflex e rádio constante" },
-            { id: 4, label: "O suspeito entra em um túnel. Qual o procedimento padrão do Operador?", type: "select", options: ["Pousar na entrada", "Informar via rádio e cercar a saída", "Entrar no túnel", "Abandonar"], correct: "Informar via rádio e cercar a saída" },
-            { id: 5, label: "O que significa 'Mayday' emitido por uma aeronave?", type: "select", options: ["Combustível baixo", "Perigo grave e iminente", "Pane leve", "Pedido de pouso"], correct: "Perigo grave e iminente" },
-            { id: 6, label: "Qual a função primária do Operador Tático?", type: "select", options: ["Apenas pilotar", "Comunicação rádio e câmera/farol", "Olhar o mapa", "Disparar sem aviso"], correct: "Comunicação rádio e câmera/farol" },
-            { id: 7, label: "Sobre disparos de precisão da aeronave, qual a regra?", type: "select", options: ["Liberado sempre", "Proibido sempre", "Autorização superior ou legítima defesa", "Liberado em colisões"], correct: "Autorização superior ou legítima defesa" },
-            { id: 8, label: "Em caso de pane total de motor, onde priorizar o pouso?", type: "select", options: ["Avenida movimentada", "Áreas abertas e sem civis", "Topo de prédios", "Qualquer local"], correct: "Áreas abertas e sem civis" },
-            { id: 9, label: "Quem detém a palavra final sobre a segurança do voo?", type: "select", options: ["Candidato", "Comandante da Aeronave", "Policial de maior patente em terra", "Operador de rádio"], correct: "Comandante da Aeronave" },
-            { id: 10, label: "Como deve ser a comunicação rádio ideal?", type: "select", options: ["Falar muito", "Frases longas", "Clara, rápida e objetiva (Cód. Q)", "Falar no final"], correct: "Clara, rápida e objetiva (Cód. Q)" },
-            { id: 11, label: "QUESTÃO ABERTA: Justifique por que você deseja ingressar na D.O.A. e qual o diferencial do seu trabalho.", type: "textarea", correct: null },
-            { id: 12, label: "QUESTÃO ABERTA: Descreva detalhadamente o procedimento ao avistar um veículo em fuga após um roubo.", type: "textarea", correct: null }
+        // ==========================================
+        // ÁREA DO ADMIN: PERGUNTAS E RESULTADOS
+        // ==========================================
+        const DOA_QUESTIONS = [
+            {
+                id: 0,
+                type: 'short',
+                question: "IDENTIFICAÇÃO: Informe seu Nome Completo e ID (Passaporte) na cidade.",
+            },
+            {
+                id: 1,
+                type: 'multiple',
+                question: "Qual a modulação padrão e correta ao iniciar o patrulhamento aéreo (PTR) saindo da base?",
+                options: [
+                    "Águia 01 decolando para dar um rolê na cidade, QAP no aguardo de chamados.",
+                    "Base, Águia 01 assumindo PTR, QTI [Área/Destino], QAP e QRV na rede.",
+                    "Águia 01 no ar, atiradores destravados, solicito ocorrência imediata.",
+                    "Copom, Águia 01 iniciando voo, QTH atual base, solicito permissão para atirar em suspeitos."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 2,
+                type: 'multiple',
+                question: "Em patrulhamento preventivo ou durante um acompanhamento padrão, qual é a doutrina estabelecida sobre a altitude de voo da aeronave?",
+                options: [
+                    "Voar o mais baixo possível (abaixo dos prédios) para assustar os suspeitos e forçar a rendição pelo ruído do motor.",
+                    "Pairar em voo estacionário exatamente em cima do veículo para que o atirador tenha visão reta pelo teto do carro.",
+                    "Manter altitude e distância de segurança (fora do cone de fogo terrestre) para evitar disparos de armas curtas, garantindo visão ampla da via.",
+                    "Pousar na via pública imediatamente à frente do veículo suspeito para realizar um bloqueio físico (barricada aérea)."
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 3,
+                type: 'multiple',
+                question: "Durante um acompanhamento (perseguição), sob quais circunstâncias o operador aerotático está AUTORIZADO a efetuar disparos a partir da aeronave contra o veículo?",
+                options: [
+                    "Assim que o veículo não respeitar a ordem de parada, visando furar os pneus para forçar o fim do acompanhamento.",
+                    "Quando o piloto comandar 'Fogo Livre', independente da situação, desde que os suspeitos sejam membros de facção.",
+                    "Se o veículo estiver em fuga há mais de 10 minutos, para evitar que o combustível do helicóptero atinja a reserva.",
+                    "Apenas sob iminente e letal agressão contra a tripulação, guarnições de solo ou civis (Risco de Morte), sendo o último recurso."
+                ],
+                correctAnswer: 3
+            },
+            {
+                id: 4,
+                type: 'multiple',
+                question: "As guarnições de solo solicitam extração aeromédica de um oficial alvejado e informam via rádio que a 'LZ está quente'. O que isso indica ao piloto?",
+                options: [
+                    "A zona de pouso está segura, bem iluminada e o clima está quente na região.",
+                    "A zona de pouso está sob fogo hostil (confronto ativo), exigindo aproximação tática extrema ou abortar o pouso até que a área seja limpa.",
+                    "O asfalto da zona de pouso (Landing Zone) está com temperatura elevada, podendo danificar os esquis.",
+                    "As viaturas de solo já controlaram a situação e estão aguardando de prontidão."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 5,
+                type: 'multiple',
+                question: "O Águia 01 assume visual de um veículo roubado em alta velocidade, e as viaturas de solo estão distantes. Qual é a ação imediata do operador aerotático?",
+                options: [
+                    "Manter silêncio na rede rádio para não atrapalhar, enquanto o piloto tenta interceptar o veículo sozinho com rasantes.",
+                    "Descer a aeronave ao nível dos postes e usar a sirene do helicóptero para ordenar verbalmente que o veículo encoste.",
+                    "Assumir a modulação da ocorrência, informando características do veículo, direção, via atual (QTH) e rotas para guiar o cerco das viaturas.",
+                    "Solicitar via rádio que todas as viaturas do estado abandonem suas ocorrências atuais e sigam para a perseguição."
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 6,
+                type: 'multiple',
+                question: "Na modulação de rádio, o operador diz: 'Águia 01 no visual, QTI sentido Centro, solicito QRM na rede'. O que significa QRM?",
+                options: [
+                    "Solicitação de reforço de imediato (Código 3) devido a confronto armado.",
+                    "Pedido para limpar a rede rádio devido a interferências, falatório desnecessário ou vozes sobrepostas atrapalhando a comunicação.",
+                    "Pedido para que as viaturas de solo recuem e deixem o Águia atuar sozinho.",
+                    "Código para informar que o suspeito bateu o carro e está em fuga a pé."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 7,
+                type: 'multiple',
+                question: "Caso um tripulante da aeronave seja alvejado gravemente em voo, qual deve ser a modulação imediata do piloto?",
+                options: [
+                    "'QAP Copom, tomamos tiro, preciso de ajuda médica, liguem para o Hospital.'",
+                    "'Código 4, encerrando patrulhamento, vamos pousar para descansar.'",
+                    "'Código 0, oficial abatido a bordo do Águia. Assumindo prioridade total no espaço aéreo e na rede para deslocamento imediato ao Hospital.'",
+                    "'Pousando a aeronave agora mesmo na rua para tentar fazer um curativo.' "
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 8,
+                type: 'multiple',
+                question: "Em caso de falha total de motor (pane) durante o voo, a manobra de emergência realizada pelo piloto, usando o fluxo de ar para girar as pás e tentar um pouso controlado, é chamada de:",
+                options: [
+                    "Auto-rotação.",
+                    "Pouso Tático Vertical (PTV).",
+                    "Estol de Velocidade Controlada.",
+                    "Mergulho em Parafuso."
+                ],
+                correctAnswer: 0
+            },
+            {
+                id: 9,
+                type: 'open',
+                question: "DISCURSIVA: Por que você deseja fazer parte da Divisão Operacional Aérea (D.O.A) da PCMG? (Seja detalhista sobre suas motivações no RP)"
+            },
+            {
+                id: 10,
+                type: 'open',
+                question: "DISCURSIVA: A D.O.A exige precisão, controle emocional e responsabilidade. Por que o Alto Comando deveria escolher você e não os demais candidatos?"
+            }
         ];
 
-        // Vinculando funções ao objeto global window para garantir funcionamento dos onclicks
-        window.showSection = (id) => {
-            const sections = ['home', 'concursos', 'resultados', 'exam'];
-            sections.forEach(s => {
-                const el = document.getElementById(`${s}-section`);
-                if(el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(`${id}-section`);
-            if(target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        };
+        // ==========================================
+        // CONFIGURAÇÃO DO DISCORD WEBHOOK
+        // ==========================================
+        // COLE O LINK DO SEU WEBHOOK ABAIXO ENTRE AS ASPAS DUPLAS
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1494100937667510272/sQ5G-fwKT3emZpZeY4ZaHJJtxSLhxrhlueM_RpQfAmtOitBKdyN1XP2BDJ19wX3ppBoN"; 
 
-        window.startExam = () => { 
-            currentStep = 0; 
-            userAnswers = {}; 
-            window.showSection('exam'); 
-            renderQuestions(); 
-            updateStep(); 
-        };
+        // Tabela estática da aba Resultados (apenas para simulação do RP)
+        const MOCK_RESULTS = [
+            { id: '1029', name: 'Arthur S. Moreira', role: 'D.O.A - Operador', status: 'Aprovado', score: '90/100', date: '15/04/2026' },
+            { id: '1030', name: 'Lucas P. Silva', role: 'D.O.A - Operador', status: 'Aprovado', score: '80/100', date: '14/04/2026' },
+            { id: '1031', name: 'Marcos R. Gomes', role: 'D.O.A - Piloto', status: 'Reprovado', score: '50/100', date: '12/04/2026' },
+            { id: '1032', name: 'Tiago C. Alencar', role: 'Investigador (G.O.E)', status: 'Aprovado', score: '95/100', date: '10/04/2026' },
+            { id: '1033', name: 'Felipe J. Martins', role: 'D.O.A - Operador', status: 'Reprovado', score: '60/100', date: '09/04/2026' },
+        ];
 
-        window.hideModal = () => {
-            const modal = document.getElementById('success-modal');
-            if(modal) modal.classList.add('hidden');
-        };
-
-        window.nextStep = () => {
-            saveCurrentAnswer();
-            if(currentStep < questions.length - 1) {
-                currentStep++; 
-                updateStep();
-            }
-        };
-
-        window.prevStep = () => { 
-            saveCurrentAnswer();
-            if(currentStep > 0) {
-                currentStep--; 
-                updateStep(); 
-            }
-        };
-
-        window.submitExam = async () => {
-            if (!user) {
-                console.error("Usuário não autenticado");
-                return;
-            }
-            saveCurrentAnswer();
-
-            if(!userAnswers[0]) {
-                const el = document.getElementById('ans-0');
-                if(el) el.focus();
+        // Função que envia os resultados da prova finalizada para o Discord
+        async function sendToDiscord(answers) {
+            if (!DISCORD_WEBHOOK_URL) {
+                console.log("Webhook não configurado. Resultados não enviados.");
                 return;
             }
 
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner animate-spin mr-2"></i> Enviando...`;
+            // Puxa as informações formatadas
+            const identificacao = answers.find(a => a.questionId === 0)?.answer || "Desconhecido";
+            const objectiveAnswers = answers.filter(a => a.type === 'multiple');
+            const score = objectiveAnswers.filter(a => a.isCorrect).length;
+            const isApproved = score >= 6;
+            const openAnswers = answers.filter(a => a.type === 'open');
 
-            let acertos = 0;
-            let totalAuto = 0;
-            questions.forEach((q, i) => { 
-                if(q.correct) {
-                    totalAuto++;
-                    if(userAnswers[i] === q.correct) acertos++; 
-                }
-            });
-            
-            const score = totalAuto > 0 ? Math.round((acertos / totalAuto) * 100) : 0;
+            const embed = {
+                title: "🚁 Nova Ficha D.O.A. Recebida!",
+                description: "Um candidato acabou de finalizar o exame teórico no Portal da Acadepol.",
+                color: isApproved ? 0x22c55e : 0xef4444, // Verde se aprovado, Vermelho se reprovado
+                fields: [
+                    { name: "👤 Identificação", value: identificacao, inline: false },
+                    { name: "📊 Fase Teórica", value: `${score} / 8 acertos\nStatus: **${isApproved ? 'APROVADO' : 'REPROVADO'}**`, inline: false },
+                    { name: "📝 Motivação (Q9)", value: openAnswers[0]?.answer || "Não respondeu.", inline: false },
+                    { name: "📝 Por que escolher você? (Q10)", value: openAnswers[1]?.answer || "Não respondeu.", inline: false }
+                ],
+                footer: { text: "Acadepol - Polícia Civil de Minas Gerais" },
+                timestamp: new Date().toISOString()
+            };
 
             try {
-                await addDoc(docRef, {
-                    nome: userAnswers[0] || "Candidato Anônimo",
-                    taxa: score,
-                    abertas: { 
-                        q11: userAnswers[10] || "Sem resposta", 
-                        q12: userAnswers[11] || "Sem resposta" 
-                    },
-                    data: serverTimestamp(),
-                    userId: user.uid
+                await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] })
                 });
-                
-                const modal = document.getElementById('success-modal');
-                if(modal) modal.classList.remove('hidden');
-                
-            } catch (e) { 
-                console.error("Erro ao salvar prova:", e);
-            } finally {
-                btn.disabled = false; 
-                btn.innerText = "Enviar Prova";
-            }
-        };
-
-        function renderQuestions() {
-            const container = document.getElementById('questions-container');
-            if(!container) return;
-            container.innerHTML = '';
-            questions.forEach((q, index) => {
-                const div = document.createElement('div');
-                div.id = `step-${index}`;
-                div.className = `step-content ${index === 0 ? 'active' : ''}`;
-                let html = `<h4 class="text-xl font-bold mb-6 text-white">${q.label}</h4>`;
-                
-                if(q.type === 'text') {
-                    html += `<input type="text" id="ans-${index}" placeholder="Digite aqui..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl outline-none focus:border-sky-500 text-white transition-all">`;
-                } else if(q.type === 'textarea') {
-                    html += `<textarea id="ans-${index}" placeholder="Sua resposta detalhada..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl outline-none focus:border-sky-500 text-white transition-all"></textarea>`;
-                } else {
-                    q.options.forEach(opt => {
-                        html += `
-                        <label class="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-slate-700 mb-3 cursor-pointer hover:bg-slate-800 hover:border-sky-500 transition-all group">
-                            <input type="radio" name="q-${index}" value="${opt}" class="w-4 h-4 accent-sky-500">
-                            <span class="group-hover:text-white">${opt}</span>
-                        </label>`;
-                    });
-                }
-                div.innerHTML = html;
-                container.appendChild(div);
-            });
-        }
-
-        function updateStep() {
-            document.querySelectorAll('.step-content').forEach((el, i) => {
-                el.classList.toggle('active', i === currentStep);
-            });
-            
-            const indicator = document.getElementById('step-indicator');
-            const progressBar = document.getElementById('progress-bar');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const submitBtn = document.getElementById('submit-btn');
-
-            if(indicator) indicator.innerText = `Pergunta ${currentStep + 1} de ${questions.length}`;
-            if(progressBar) progressBar.style.width = `${((currentStep+1)/questions.length)*100}%`;
-            
-            if(prevBtn) prevBtn.classList.toggle('hidden', currentStep === 0);
-            if(nextBtn) nextBtn.classList.toggle('hidden', currentStep === questions.length - 1);
-            if(submitBtn) submitBtn.classList.toggle('hidden', currentStep !== questions.length - 1);
-        }
-
-        function saveCurrentAnswer() {
-            const q = questions[currentStep];
-            if(q.type === 'text' || q.type === 'textarea') {
-                const el = document.getElementById(`ans-${currentStep}`);
-                userAnswers[currentStep] = el ? el.value.trim() : "";
-            } else {
-                const sel = document.querySelector(`input[name="q-${currentStep}"]:checked`);
-                userAnswers[currentStep] = sel ? sel.value : "";
-            }
-        }
-
-        async function init() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                console.log("Resultados enviados para o Discord com sucesso!");
             } catch (err) {
-                console.error("Erro na autenticação:", err);
+                console.error("Erro ao enviar para o Discord:", err);
+            }
+        }
+
+        // ==========================================
+        // COMPONENTES DA INTERFACE
+        // ==========================================
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('home');
+
+            const navigate = (page) => {
+                window.scrollTo(0, 0);
+                setCurrentPage(page);
+            };
+
+            return (
+                <div className="min-h-screen bg-[#121214] text-slate-200 font-sans selection:bg-red-600 selection:text-white flex flex-col">
+                    {/* HEADER PCMG */}
+                    <header className="bg-[#0a0a0b] pt-6 pb-4 sticky top-0 z-50 border-b border-red-600/20">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                {/* Logo PCMG */}
+                                <div 
+                                    className="flex items-center space-x-4 cursor-pointer group"
+                                    onClick={() => navigate('home')}
+                                >
+                                    <div className="w-12 h-12 flex items-center justify-center group-hover:scale-105 transition-transform relative">
+                                        <MGTriangle className="w-10 h-10 text-red-600" />
+                                    </div>
+                                    <div className="flex flex-col leading-tight">
+                                        <span className="text-xl font-black tracking-widest text-white uppercase">Polícia Civil</span>
+                                        <span className="text-[11px] text-red-500 font-bold tracking-[0.15em] uppercase mt-0.5">Minas Gerais</span>
+                                    </div>
+                                </div>
+
+                                {/* Menu Desktop */}
+                                <div className="hidden md:flex items-center space-x-10">
+                                    <nav className="flex space-x-8">
+                                        <button 
+                                            onClick={() => navigate('home')}
+                                            className={`text-sm font-semibold transition-colors hover:text-white ${currentPage === 'home' ? 'text-white' : 'text-slate-400'}`}
+                                        >
+                                            Início
+                                        </button>
+                                        <button 
+                                            onClick={() => navigate('concursos')}
+                                            className={`text-sm font-semibold transition-colors hover:text-white ${currentPage.includes('concursos') || currentPage.includes('doa') ? 'text-white' : 'text-slate-400'}`}
+                                        >
+                                            Concursos
+                                        </button>
+                                    </nav>
+
+                                    {/* Botão Resultados */}
+                                    <button 
+                                        onClick={() => navigate('resultados')}
+                                        className={`border px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center space-x-2
+                                            ${currentPage === 'resultados' 
+                                                ? 'border-red-600 bg-red-600/10 text-red-500' 
+                                                : 'border-slate-700 hover:border-red-600 hover:bg-slate-800/50 text-white'}`}
+                                    >
+                                        <ListIcon className="w-4 h-4" />
+                                        <span>Resultados</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* ÁREA DE CONTEÚDO PRINCIPAL */}
+                    <main className="flex-grow">
+                        {currentPage === 'home' && <HomeView navigate={navigate} />}
+                        {currentPage === 'concursos' && <ConcursosView navigate={navigate} />}
+                        {currentPage === 'doa_intro' && <DoaIntroView navigate={navigate} />}
+                        {currentPage === 'doa_quiz' && <DoaQuizView navigate={navigate} />}
+                        {currentPage === 'resultados' && <ResultadosView />}
+                    </main>
+
+                    {/* FOOTER */}
+                    <footer className="bg-[#0a0a0b] border-t border-slate-800/50 py-10 mt-12">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+                            <MGTriangle className="w-8 h-8 text-slate-700 mb-4" />
+                            <p className="text-slate-500 text-sm font-medium">
+                                &copy; 2026 Polícia Civil de Minas Gerais Roleplay.
+                            </p>
+                            <p className="text-slate-600 text-xs mt-2">
+                                Libertas Quæ Sera Tamen. Este é um portal simulado para fins de Roleplay.
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        // ==========================================
+        // VIEW: LANDING PAGE (HOME)
+        // ==========================================
+        function HomeView({ navigate }) {
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                        <div className="order-2 lg:order-1 pr-0 lg:pr-8">
+                            <div className="mb-4 flex items-center space-x-2">
+                                <span className="w-8 h-1 bg-red-600 rounded-full"></span>
+                                <span className="text-red-500 font-bold text-xs tracking-widest uppercase">Acadepol MG</span>
+                            </div>
+                            
+                            <h1 className="text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
+                                Sua Carreira <br />
+                                <span className="text-red-600">Inicia Aqui.</span>
+                            </h1>
+                            
+                            <p className="text-slate-400 text-lg mb-10 max-w-md leading-relaxed">
+                                Acesse os editais abertos, realize sua inscrição para a D.O.A e acompanhe sua classificação em tempo real através do sistema integrado da Polícia Civil de Minas Gerais.
+                            </p>
+                            
+                            <div className="flex flex-wrap gap-4">
+                                <button 
+                                    onClick={() => navigate('concursos')}
+                                    className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3.5 rounded-xl flex items-center space-x-2 transition-all shadow-lg shadow-red-900/30"
+                                >
+                                    <span>Ver Editais Abertos</span>
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                                <button 
+                                    onClick={() => navigate('resultados')}
+                                    className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3.5 rounded-xl flex items-center space-x-2 transition-all border border-slate-700"
+                                >
+                                    <ListIcon className="w-5 h-5" />
+                                    <span>Ver Resultados</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="order-1 lg:order-2 relative">
+                            <div className="absolute -right-10 -top-10 opacity-5 w-96 h-96 pointer-events-none">
+                                <img 
+                                    src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Bras%C3%A3o_Pol%C3%ADcia_Civil_Minas_Gerais.png" 
+                                    alt="Brasão PCMG" 
+                                    className="w-full h-full object-contain filter grayscale"
+                                />
+                            </div>
+
+                            <div className="relative rounded-3xl overflow-hidden aspect-square max-h-[550px] w-full bg-slate-800 border border-slate-700 shadow-2xl">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1518558997970-4fdc35e985b9?auto=format&fit=crop&q=80&w=1000" 
+                                    alt="Helicóptero da Polícia" 
+                                    className="w-full h-full object-cover"
+                                />
+                                
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/50 to-transparent"></div>
+                                
+                                <div className="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
+                                    <div>
+                                        <div className="flex items-center space-x-2 mb-2">
+                                            <Helicopter className="w-4 h-4 text-red-500" />
+                                            <span className="text-red-500 font-bold text-xs uppercase tracking-wider">Apoio Tático Aéreo</span>
+                                        </div>
+                                        <h3 className="text-white font-bold text-xl">Divisão Operacional Aérea</h3>
+                                    </div>
+                                    
+                                    <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-lg p-2 border border-white/20">
+                                        <img 
+                                            src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Bras%C3%A3o_Pol%C3%ADcia_Civil_Minas_Gerais.png" 
+                                            alt="MG" 
+                                            className="w-full h-full object-contain drop-shadow-lg"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ==========================================
+        // VIEW: LISTA DE CONCURSOS
+        // ==========================================
+        function ConcursosView({ navigate }) {
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="mb-10 border-l-4 border-red-600 pl-4">
+                        <h1 className="text-3xl font-black text-white mb-1 uppercase tracking-wide">Portal de Concursos</h1>
+                        <p className="text-slate-400">Selecione o processo seletivo desejado para iniciar sua avaliação.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="bg-[#18181b] border-2 border-red-600/50 rounded-2xl overflow-hidden shadow-xl shadow-red-900/10 hover:border-red-500 transition-colors group flex flex-col">
+                            <div className="bg-[#0a0a0b] p-6 border-b border-slate-800 flex items-center justify-between">
+                                <div className="bg-red-600/10 p-3 rounded-xl border border-red-600/20">
+                                    <Helicopter className="w-8 h-8 text-red-500" />
+                                </div>
+                                <span className="bg-green-500/10 text-green-500 border border-green-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                    Inscrições Abertas
+                                </span>
+                            </div>
+                            <div className="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-xl font-bold text-white mb-2">Divisão Operacional Aérea (D.O.A)</h2>
+                                    <p className="text-sm text-slate-400 mb-6">
+                                        Processo seletivo interno para formação de operadores aerotáticos da PCMG. Exige conhecimentos técnicos e doutrina de voo.
+                                    </p>
+                                </div>
+                                <button 
+                                    onClick={() => navigate('doa_intro')}
+                                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg flex justify-center items-center space-x-2 transition-all"
+                                >
+                                    <span>Acessar Edital e Prova</span>
+                                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#18181b] border border-slate-800 rounded-2xl overflow-hidden opacity-75 flex flex-col">
+                            <div className="bg-[#0a0a0b] p-6 border-b border-slate-800 flex items-center justify-between">
+                                <div className="bg-slate-800 p-3 rounded-xl">
+                                    <Shield className="w-8 h-8 text-slate-400" />
+                                </div>
+                                <span className="bg-slate-800 text-slate-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                    Em Breve
+                                </span>
+                            </div>
+                            <div className="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-xl font-bold text-white mb-2">Investigador de Polícia (G.O.E)</h2>
+                                    <p className="text-sm text-slate-400 mb-6">
+                                        Grupamento de Operações Especiais. Curso de formação focado em intervenções táticas de alto risco e resgate.
+                                    </p>
+                                </div>
+                                <button disabled className="w-full bg-slate-800 text-slate-500 font-bold py-3 rounded-lg cursor-not-allowed border border-slate-700">
+                                    Aguardando Edital
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ==========================================
+        // VIEW: ABA DE RESULTADOS
+        // ==========================================
+        function ResultadosView() {
+            const [searchTerm, setSearchTerm] = useState('');
+
+            const filteredResults = MOCK_RESULTS.filter(res => 
+                res.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                res.role.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            return (
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="mb-8 border-l-4 border-red-600 pl-4">
+                        <h1 className="text-3xl font-black text-white mb-1 uppercase tracking-wide">Resultados Oficiais</h1>
+                        <p className="text-slate-400">Consulte o status e a pontuação dos candidatos nos últimos certames da Acadepol.</p>
+                    </div>
+
+                    <div className="bg-[#18181b] border border-slate-800 rounded-2xl p-6 shadow-xl">
+                        <div className="mb-6 flex items-center bg-[#0a0a0b] border border-slate-700 rounded-lg px-4 py-3 focus-within:border-red-500 transition-colors">
+                            <Search className="w-5 h-5 text-slate-500 mr-3" />
+                            <input 
+                                type="text" 
+                                placeholder="Buscar por nome ou cargo..." 
+                                className="bg-transparent border-none outline-none text-white w-full placeholder-slate-500"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm text-slate-300">
+                                <thead className="text-xs uppercase bg-[#0a0a0b] text-slate-400 border-b border-slate-700">
+                                    <tr>
+                                        <th className="px-4 py-4 font-bold rounded-tl-lg">Inscrição</th>
+                                        <th className="px-4 py-4 font-bold">Candidato</th>
+                                        <th className="px-4 py-4 font-bold">Cargo/Unidade</th>
+                                        <th className="px-4 py-4 font-bold">Data</th>
+                                        <th className="px-4 py-4 font-bold">Pontuação</th>
+                                        <th className="px-4 py-4 font-bold rounded-tr-lg">Situação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredResults.length > 0 ? (
+                                        filteredResults.map((result, index) => (
+                                            <tr key={index} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
+                                                <td className="px-4 py-4 font-mono text-slate-500">#{result.id}</td>
+                                                <td className="px-4 py-4 font-bold text-white">{result.name}</td>
+                                                <td className="px-4 py-4 text-slate-400">{result.role}</td>
+                                                <td className="px-4 py-4 text-slate-500">{result.date}</td>
+                                                <td className="px-4 py-4 font-mono">{result.score}</td>
+                                                <td className="px-4 py-4">
+                                                    {result.status === 'Aprovado' ? (
+                                                        <span className="inline-flex items-center bg-green-500/10 text-green-500 text-xs font-bold px-2.5 py-1 rounded border border-green-500/20">
+                                                            <CheckCircle className="w-3 h-3 mr-1" /> APROVADO
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center bg-red-500/10 text-red-500 text-xs font-bold px-2.5 py-1 rounded border border-red-500/20">
+                                                            <XCircle className="w-3 h-3 mr-1" /> REPROVADO
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6" className="px-4 py-8 text-center text-slate-500">
+                                                Nenhum candidato encontrado com esse filtro.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ==========================================
+        // VIEW: D.O.A INTRODUÇÃO
+        // ==========================================
+        function DoaIntroView({ navigate }) {
+            return (
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <button 
+                        onClick={() => navigate('concursos')}
+                        className="text-slate-400 hover:text-white mb-6 flex items-center text-sm transition-colors"
+                    >
+                        &larr; Voltar para Concursos
+                    </button>
+
+                    <div className="bg-[#18181b] rounded-2xl p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
+                        <MGTriangle className="absolute -right-20 -bottom-20 w-96 h-96 text-slate-800/30 pointer-events-none" />
+
+                        <div className="relative z-10">
+                            <div className="flex items-center space-x-4 mb-8 pb-6 border-b border-slate-800">
+                                <div className="bg-red-600 p-4 rounded-xl shadow-lg shadow-red-900/20">
+                                    <FileText className="w-10 h-10 text-white" />
+                                </div>
+                                <div>
+                                    <h1 className="text-3xl font-black text-white uppercase">Processo Seletivo D.O.A.</h1>
+                                    <p className="text-red-500 font-bold tracking-wider uppercase text-sm">Polícia Civil de Minas Gerais</p>
+                                </div>
+                            </div>
+
+                            <div className="prose prose-invert max-w-none text-slate-300 mb-10">
+                                <h3 className="text-xl font-bold text-white mb-4">Instruções Oficiais - Acadepol</h3>
+                                <p>
+                                    Bem-vindo candidato. Você está prestes a iniciar a avaliação para o grupamento D.O.A. 
+                                    Esta divisão exige disciplina, raciocínio rápido e amplo conhecimento das doutrinas de operações aéreas da PCMG.
+                                </p>
+                                <ul className="list-none space-y-3 mt-6">
+                                    <li className="flex items-start">
+                                        <AlertTriangle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                                        <span>O exame contém <strong>8 questões objetivas</strong> (múltipla escolha) e <strong>2 questões discursivas</strong> (abertas).</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                                        <span>Para ser <strong>APROVADO</strong> na fase teórica, é necessário acertar no mínimo <strong>6 das 8 questões objetivas (75%)</strong>.</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <FileText className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                                        <span>As questões discursivas serão enviadas diretamente ao Alto Comando da D.O.A para <strong>análise de perfil</strong>.</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                                        <span>Leia atentamente cada questão. Após confirmar a resposta, não será possível voltar. Respostas curtas nas discursivas não serão aceitas.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="flex justify-end pt-6 border-t border-slate-800">
+                                <button 
+                                    onClick={() => navigate('doa_quiz')}
+                                    className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl flex items-center space-x-2 transition-all shadow-lg shadow-red-900/30"
+                                >
+                                    <span>Estou Ciente, Iniciar Prova</span>
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ==========================================
+        // VIEW: D.O.A QUIZ
+        // ==========================================
+        function DoaQuizView({ navigate }) {
+            const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+            const [currentAnswer, setCurrentAnswer] = useState(null); 
+            const [answers, setAnswers] = useState([]);
+            const [isFinished, setIsFinished] = useState(false);
+            const [isAnimating, setIsAnimating] = useState(false);
+
+            const question = DOA_QUESTIONS[currentQuestionIndex];
+            const progressPercentage = ((currentQuestionIndex) / DOA_QUESTIONS.length) * 100;
+
+            const handleSelectOption = (index) => {
+                setCurrentAnswer(index);
+            };
+
+            const handleTextChange = (e) => {
+                setCurrentAnswer(e.target.value);
+            };
+
+            const handleNextQuestion = () => {
+                if (question.type === 'multiple' && currentAnswer === null) return;
+                if (question.type === 'short' && (!currentAnswer || currentAnswer.trim().length < 3)) return;
+                if (question.type === 'open' && (!currentAnswer || currentAnswer.trim().length < 20)) return;
+
+                const newAnswers = [...answers, {
+                    questionId: question.id,
+                    type: question.type,
+                    answer: currentAnswer,
+                    isCorrect: question.type === 'multiple' ? currentAnswer === question.correctAnswer : null
+                }];
+                
+                setAnswers(newAnswers);
+                setIsAnimating(true);
+                
+                setTimeout(() => {
+                    if (currentQuestionIndex < DOA_QUESTIONS.length - 1) {
+                        setCurrentQuestionIndex(currentQuestionIndex + 1);
+                        setCurrentAnswer(null); 
+                    } else {
+                        setIsFinished(true);
+                        // CHAMA A FUNÇÃO PARA ENVIAR AO DISCORD ASSIM QUE TERMINA
+                        sendToDiscord(newAnswers);
+                    }
+                    setIsAnimating(false);
+                }, 400); 
+            };
+
+            const isNextDisabled = question.type === 'multiple' 
+                ? currentAnswer === null 
+                : question.type === 'short'
+                    ? !currentAnswer || currentAnswer.trim().length < 3
+                    : !currentAnswer || currentAnswer.trim().length < 20;
+
+            if (isFinished) {
+                const objectiveAnswers = answers.filter(a => a.type === 'multiple');
+                const score = objectiveAnswers.filter(a => a.isCorrect).length;
+                const totalObjective = objectiveAnswers.length;
+                const isApproved = score >= 6; 
+
+                return (
+                    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center animate-in fade-in zoom-in duration-500">
+                        <div className={`p-8 rounded-3xl border-4 shadow-2xl relative overflow-hidden ${isApproved ? 'bg-[#18181b] border-green-600 shadow-green-900/20' : 'bg-[#18181b] border-red-600 shadow-red-900/20'}`}>
+                            
+                            <div className="flex justify-center mb-6 relative z-10">
+                                {isApproved ? (
+                                    <div className="bg-green-500/20 p-6 rounded-full border border-green-500/30">
+                                        <Award className="w-20 h-20 text-green-500" />
+                                    </div>
+                                ) : (
+                                    <div className="bg-red-500/20 p-6 rounded-full border border-red-500/30">
+                                        <XCircle className="w-20 h-20 text-red-500" />
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <h1 className="text-4xl font-black text-white mb-2 uppercase relative z-10">
+                                {isApproved ? 'Fase Teórica Aprovada' : 'Candidato Reprovado'}
+                            </h1>
+                            <p className="text-xl text-slate-300 mb-8 relative z-10">
+                                Sua pontuação objetiva: <strong className={isApproved ? 'text-green-500' : 'text-red-500'}>{score} de {totalObjective}</strong>
+                            </p>
+
+                            <div className="bg-[#0a0a0b] rounded-xl p-6 mb-8 text-left border border-slate-800 relative z-10">
+                                <h3 className="font-bold text-white mb-4 border-b border-slate-800 pb-2">Parecer Oficial Acadepol:</h3>
+                                <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                                    {isApproved 
+                                        ? "Parabéns! Você demonstrou excelente conhecimento das diretrizes operacionais e obteve nota satisfatória na prova teórica." 
+                                        : "Infelizmente sua pontuação objetiva não atingiu o mínimo necessário (6 acertos). O processo foi encerrado."}
+                                </p>
+                                {isApproved && (
+                                    <div className="bg-red-600/10 border border-red-600/30 rounded-lg p-4 flex items-start">
+                                        <FileText className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                                        <p className="text-sm text-slate-300">
+                                            <strong className="text-white">Próximos Passos:</strong> Suas respostas discursivas foram salvas no sistema e encaminhadas ao Alto Comando. 
+                                            Aguarde a leitura do seu perfil e a convocação oficial no painel de Resultados para o Teste de Voo (Fase Prática).
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="flex justify-center space-x-4 relative z-10">
+                                <button 
+                                    onClick={() => navigate('resultados')}
+                                    className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-4 rounded-xl transition-colors border border-slate-700"
+                                >
+                                    Ver Mural de Resultados
+                                </button>
+                                <button 
+                                    onClick={() => navigate('home')}
+                                    className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-4 rounded-xl transition-colors shadow-lg"
+                                >
+                                    Voltar ao Início
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
             }
 
-            onAuthStateChanged(auth, (loggedUser) => {
-                user = loggedUser;
-                if (user) {
-                    setupListeners();
-                }
-            });
+            return (
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="mb-8">
+                        <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">
+                            <span>Questão {currentQuestionIndex + 1} de {DOA_QUESTIONS.length}</span>
+                            <span className="text-red-500">{Math.round(progressPercentage)}% Concluído</span>
+                        </div>
+                        <div className="w-full bg-[#18181b] rounded-full h-3 overflow-hidden border border-slate-800">
+                            <div 
+                                className="bg-red-600 h-3 rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(220,38,38,0.5)]"
+                                style={{ width: `${progressPercentage}%` }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div className={`transition-opacity duration-300 ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+                        <div className="bg-[#18181b] border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-8">
+                            
+                            <div className="flex items-center space-x-3 mb-6">
+                                <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${
+                                    question.type === 'open' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 
+                                    question.type === 'short' ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20' :
+                                    'bg-red-600/10 text-red-500 border border-red-600/20'}`}>
+                                    {question.type === 'open' ? 'Discursiva (Perfil)' : 
+                                     question.type === 'short' ? 'Identificação do Candidato' :
+                                     'Objetiva (Teórica)'}
+                                </span>
+                            </div>
+
+                            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 leading-tight">
+                                {question.question}
+                            </h2>
+
+                            {question.type === 'multiple' && (
+                                <div className="space-y-4">
+                                    {question.options.map((opt, index) => {
+                                        const isSelected = currentAnswer === index;
+                                        return (
+                                            <button
+                                                key={index}
+                                                onClick={() => handleSelectOption(index)}
+                                                className={`w-full text-left p-5 rounded-xl border-2 transition-all flex items-center space-x-4
+                                                    ${isSelected 
+                                                        ? 'border-red-600 bg-red-600/10 text-white shadow-md shadow-red-900/20' 
+                                                        : 'border-slate-800 bg-[#0a0a0b] text-slate-300 hover:border-slate-600 hover:bg-slate-800/50'
+                                                    }
+                                                `}
+                                            >
+                                                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border
+                                                    ${isSelected ? 'bg-red-600 border-red-600 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}
+                                                `}>
+                                                    {String.fromCharCode(65 + index)}
+                                                </div>
+                                                <span className="text-lg leading-snug">{opt}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {question.type === 'short' && (
+                                <div>
+                                    <input
+                                        type="text"
+                                        value={currentAnswer || ''}
+                                        onChange={handleTextChange}
+                                        placeholder="Ex: João Silva - ID: 1024"
+                                        className="w-full bg-[#0a0a0b] border border-slate-700 rounded-xl p-5 text-white placeholder-slate-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all text-lg font-mono"
+                                    />
+                                    <p className="text-slate-500 text-sm mt-3 flex items-center">
+                                        <AlertTriangle className="w-4 h-4 mr-2 text-blue-500" />
+                                        Campo obrigatório para vincular sua prova no sistema.
+                                    </p>
+                                </div>
+                            )}
+
+                            {question.type === 'open' && (
+                                <div>
+                                    <textarea
+                                        value={currentAnswer || ''}
+                                        onChange={handleTextChange}
+                                        placeholder="Digite sua resposta detalhada aqui..."
+                                        className="w-full h-48 bg-[#0a0a0b] border border-slate-700 rounded-xl p-5 text-white placeholder-slate-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none resize-none transition-all"
+                                    ></textarea>
+                                    <p className="text-slate-500 text-sm mt-3 flex items-center">
+                                        <AlertTriangle className="w-4 h-4 mr-2 text-amber-500" />
+                                        Mínimo de 20 caracteres obrigatórios. Explique com detalhes.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-end">
+                            <button
+                                onClick={handleNextQuestion}
+                                disabled={isNextDisabled}
+                                className={`px-8 py-4 rounded-xl font-bold flex items-center space-x-2 transition-all
+                                    ${!isNextDisabled 
+                                        ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-900/30 cursor-pointer' 
+                                        : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                                    }
+                                `}
+                            >
+                                <span>{currentQuestionIndex === DOA_QUESTIONS.length - 1 ? 'Enviar Prova' : 'Próxima Questão'}</span>
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            );
         }
 
-        function setupListeners() {
-            onSnapshot(docRef, (snap) => {
-                const results = [];
-                snap.forEach(doc => results.push(doc.data()));
-                results.sort((a,b) => (b.taxa || 0) - (a.taxa || 0));
-                
-                const tbody = document.getElementById('results-table-body');
-                if(tbody) {
-                    tbody.innerHTML = results.map((r, i) => `
-                        <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
-                            <td class="p-5 font-mono text-gray-500">#${i+1}</td>
-                            <td class="p-5">
-                                <div class="font-bold text-white">${r.nome}</div>
-                                <div class="text-[10px] text-gray-500 uppercase">D.O.A - Candidato</div>
-                            </td>
-                            <td class="p-5 text-center text-sky-400 font-bold">${r.taxa}%</td>
-                            <td class="p-5 text-right font-bold ${r.taxa >= 70 ? 'text-green-500' : 'text-red-500'}">
-                                ${r.taxa >= 70 ? 'APROVADO' : 'REPROVADO'}
-                            </td>
-                        </tr>
-                    `).join('') || '<tr><td colspan="4" class="p-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>';
-                }
-            }, (err) => {
-                console.error("Erro ao ler resultados:", err);
-            });
-        }
-        
-        // Garante que o script rode após o carregamento da janela
-        window.onload = () => {
-            init();
-        };
+        // Montar a aplicação React
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
