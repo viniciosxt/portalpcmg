@@ -171,7 +171,6 @@
         const db = getFirestore(app);
         
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-pc-rp';
-        // Path fixo exigido pelas regras de segurança
         const collectionPath = `artifacts/${appId}/public/data/provas_doa`;
         const docRef = collection(db, collectionPath);
 
@@ -181,84 +180,20 @@
 
         const questions = [
             { id: 1, label: "Nome Completo (RP):", type: "text", correct: null },
-            { 
-                id: 2, 
-                label: "Em perseguição urbana de alto risco, qual altitude deve ser mantida pelo Águia?", 
-                type: "select", 
-                options: ["Baixa altitude (10m)", "Média altitude (150m-200m)", "Alta altitude (500m+)", "Variação constante"], 
-                correct: "Média altitude (150m-200m)" 
-            },
-            { 
-                id: 3, 
-                label: "O Código 3 na aviação policial indica prioridade máxima. Quais sinais são obrigatórios?", 
-                type: "select", 
-                options: ["Luzes de navegação", "Apenas farol de busca", "Giroflex e rádio constante", "Sigilo total"], 
-                correct: "Giroflex e rádio constante" 
-            },
-            { 
-                id: 4, 
-                label: "O suspeito entra em um túnel. Qual o procedimento padrão do Operador?", 
-                type: "select", 
-                options: ["Pousar na entrada", "Informar via rádio e cercar a saída", "Entrar no túnel", "Abandonar"], 
-                correct: "Informar via rádio e cercar a saída" 
-            },
-            { 
-                id: 5, 
-                label: "O que significa 'Mayday' emitido por uma aeronave?", 
-                type: "select", 
-                options: ["Combustível baixo", "Perigo grave e iminente", "Pane leve", "Pedido de pouso"], 
-                correct: "Perigo grave e iminente" 
-            },
-            { 
-                id: 6, 
-                label: "Qual a função primária do Operador Tático?", 
-                type: "select", 
-                options: ["Apenas pilotar", "Comunicação rádio e câmera/farol", "Olhar o mapa", "Disparar sem aviso"], 
-                correct: "Comunicação rádio e câmera/farol" 
-            },
-            { 
-                id: 7, 
-                label: "Sobre disparos de precisão da aeronave, qual a regra?", 
-                type: "select", 
-                options: ["Liberado sempre", "Proibido sempre", "Autorização superior ou legítima defesa", "Liberado em colisões"], 
-                correct: "Autorização superior ou legítima defesa" 
-            },
-            { 
-                id: 8, 
-                label: "Em caso de pane total de motor, onde priorizar o pouso?", 
-                type: "select", 
-                options: ["Avenida movimentada", "Áreas abertas e sem civis", "Topo de prédios", "Qualquer local"], 
-                correct: "Áreas abertas e sem civis" 
-            },
-            { 
-                id: 9, 
-                label: "Quem detém a palavra final sobre a segurança do voo?", 
-                type: "select", 
-                options: ["Candidato", "Comandante da Aeronave", "Policial de maior patente em terra", "Operador de rádio"], 
-                correct: "Comandante da Aeronave" 
-            },
-            { 
-                id: 10, 
-                label: "Como deve ser a comunicação rádio ideal?", 
-                type: "select", 
-                options: ["Falar muito", "Frases longas", "Clara, rápida e objetiva (Cód. Q)", "Falar no final"], 
-                correct: "Clara, rápida e objetiva (Cód. Q)" 
-            },
-            { 
-                id: 11, 
-                label: "QUESTÃO ABERTA: Justifique por que você deseja ingressar na D.O.A. e qual o diferencial do seu trabalho.", 
-                type: "textarea", 
-                correct: null 
-            },
-            { 
-                id: 12, 
-                label: "QUESTÃO ABERTA: Descreva detalhadamente o procedimento ao avistar um veículo em fuga após um roubo.", 
-                type: "textarea", 
-                correct: null 
-            }
+            { id: 2, label: "Em perseguição urbana de alto risco, qual altitude deve ser mantida pelo Águia?", type: "select", options: ["Baixa altitude (10m)", "Média altitude (150m-200m)", "Alta altitude (500m+)", "Variação constante"], correct: "Média altitude (150m-200m)" },
+            { id: 3, label: "O Código 3 na aviação policial indica prioridade máxima. Quais sinais são obrigatórios?", type: "select", options: ["Luzes de navegação", "Apenas farol de busca", "Giroflex e rádio constante", "Sigilo total"], correct: "Giroflex e rádio constante" },
+            { id: 4, label: "O suspeito entra em um túnel. Qual o procedimento padrão do Operador?", type: "select", options: ["Pousar na entrada", "Informar via rádio e cercar a saída", "Entrar no túnel", "Abandonar"], correct: "Informar via rádio e cercar a saída" },
+            { id: 5, label: "O que significa 'Mayday' emitido por uma aeronave?", type: "select", options: ["Combustível baixo", "Perigo grave e iminente", "Pane leve", "Pedido de pouso"], correct: "Perigo grave e iminente" },
+            { id: 6, label: "Qual a função primária do Operador Tático?", type: "select", options: ["Apenas pilotar", "Comunicação rádio e câmera/farol", "Olhar o mapa", "Disparar sem aviso"], correct: "Comunicação rádio e câmera/farol" },
+            { id: 7, label: "Sobre disparos de precisão da aeronave, qual a regra?", type: "select", options: ["Liberado sempre", "Proibido sempre", "Autorização superior ou legítima defesa", "Liberado em colisões"], correct: "Autorização superior ou legítima defesa" },
+            { id: 8, label: "Em caso de pane total de motor, onde priorizar o pouso?", type: "select", options: ["Avenida movimentada", "Áreas abertas e sem civis", "Topo de prédios", "Qualquer local"], correct: "Áreas abertas e sem civis" },
+            { id: 9, label: "Quem detém a palavra final sobre a segurança do voo?", type: "select", options: ["Candidato", "Comandante da Aeronave", "Policial de maior patente em terra", "Operador de rádio"], correct: "Comandante da Aeronave" },
+            { id: 10, label: "Como deve ser a comunicação rádio ideal?", type: "select", options: ["Falar muito", "Frases longas", "Clara, rápida e objetiva (Cód. Q)", "Falar no final"], correct: "Clara, rápida e objetiva (Cód. Q)" },
+            { id: 11, label: "QUESTÃO ABERTA: Justifique por que você deseja ingressar na D.O.A. e qual o diferencial do seu trabalho.", type: "textarea", correct: null },
+            { id: 12, label: "QUESTÃO ABERTA: Descreva detalhadamente o procedimento ao avistar um veículo em fuga após um roubo.", type: "textarea", correct: null }
         ];
 
-        // Global functions
+        // Vinculando funções ao objeto global window para garantir funcionamento dos onclicks
         window.showSection = (id) => {
             const sections = ['home', 'concursos', 'resultados', 'exam'];
             sections.forEach(s => {
@@ -273,7 +208,6 @@
         };
 
         window.startExam = () => { 
-            if(!user) return; // Prevent start without auth
             currentStep = 0; 
             userAnswers = {}; 
             window.showSection('exam'); 
@@ -284,6 +218,73 @@
         window.hideModal = () => {
             const modal = document.getElementById('success-modal');
             if(modal) modal.classList.add('hidden');
+        };
+
+        window.nextStep = () => {
+            saveCurrentAnswer();
+            if(currentStep < questions.length - 1) {
+                currentStep++; 
+                updateStep();
+            }
+        };
+
+        window.prevStep = () => { 
+            saveCurrentAnswer();
+            if(currentStep > 0) {
+                currentStep--; 
+                updateStep(); 
+            }
+        };
+
+        window.submitExam = async () => {
+            if (!user) {
+                console.error("Usuário não autenticado");
+                return;
+            }
+            saveCurrentAnswer();
+
+            if(!userAnswers[0]) {
+                const el = document.getElementById('ans-0');
+                if(el) el.focus();
+                return;
+            }
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner animate-spin mr-2"></i> Enviando...`;
+
+            let acertos = 0;
+            let totalAuto = 0;
+            questions.forEach((q, i) => { 
+                if(q.correct) {
+                    totalAuto++;
+                    if(userAnswers[i] === q.correct) acertos++; 
+                }
+            });
+            
+            const score = totalAuto > 0 ? Math.round((acertos / totalAuto) * 100) : 0;
+
+            try {
+                await addDoc(docRef, {
+                    nome: userAnswers[0] || "Candidato Anônimo",
+                    taxa: score,
+                    abertas: { 
+                        q11: userAnswers[10] || "Sem resposta", 
+                        q12: userAnswers[11] || "Sem resposta" 
+                    },
+                    data: serverTimestamp(),
+                    userId: user.uid
+                });
+                
+                const modal = document.getElementById('success-modal');
+                if(modal) modal.classList.remove('hidden');
+                
+            } catch (e) { 
+                console.error("Erro ao salvar prova:", e);
+            } finally {
+                btn.disabled = false; 
+                btn.innerText = "Enviar Prova";
+            }
         };
 
         function renderQuestions() {
@@ -344,72 +345,7 @@
             }
         }
 
-        window.nextStep = () => {
-            saveCurrentAnswer();
-            if(currentStep < questions.length - 1) {
-                currentStep++; 
-                updateStep();
-            }
-        };
-
-        window.prevStep = () => { 
-            saveCurrentAnswer();
-            if(currentStep > 0) {
-                currentStep--; 
-                updateStep(); 
-            }
-        };
-
-        window.submitExam = async () => {
-            if (!user) return;
-            saveCurrentAnswer();
-
-            if(!userAnswers[0]) {
-                const el = document.getElementById('ans-0');
-                if(el) el.focus();
-                return;
-            }
-
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner animate-spin mr-2"></i> Enviando...`;
-
-            let acertos = 0;
-            let totalAuto = 0;
-            questions.forEach((q, i) => { 
-                if(q.correct) {
-                    totalAuto++;
-                    if(userAnswers[i] === q.correct) acertos++; 
-                }
-            });
-            
-            const score = totalAuto > 0 ? Math.round((acertos / totalAuto) * 100) : 0;
-
-            try {
-                await addDoc(docRef, {
-                    nome: userAnswers[0] || "Candidato Anônimo",
-                    taxa: score,
-                    abertas: { 
-                        q11: userAnswers[10] || "Sem resposta", 
-                        q12: userAnswers[11] || "Sem resposta" 
-                    },
-                    data: serverTimestamp(),
-                    userId: user.uid
-                });
-                
-                const modal = document.getElementById('success-modal');
-                if(modal) modal.classList.remove('hidden');
-                
-            } catch (e) { 
-                console.error("Erro ao salvar prova:", e);
-            } finally {
-                btn.disabled = false; 
-                btn.innerText = "Enviar Prova";
-            }
-        };
-
         async function init() {
-            // Regra 3: Autenticar PRIMEIRO e aguardar
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
@@ -418,10 +354,8 @@
                 }
             } catch (err) {
                 console.error("Erro na autenticação:", err);
-                return;
             }
 
-            // Escutar mudanças de estado de auth
             onAuthStateChanged(auth, (loggedUser) => {
                 user = loggedUser;
                 if (user) {
@@ -431,12 +365,9 @@
         }
 
         function setupListeners() {
-            // Apenas inicia leitura após ter usuário
             onSnapshot(docRef, (snap) => {
                 const results = [];
                 snap.forEach(doc => results.push(doc.data()));
-                
-                // Ordenação em memória (Regra 2: Sem filtros complexos no Firestore)
                 results.sort((a,b) => (b.taxa || 0) - (a.taxa || 0));
                 
                 const tbody = document.getElementById('results-table-body');
@@ -456,13 +387,14 @@
                     `).join('') || '<tr><td colspan="4" class="p-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>';
                 }
             }, (err) => {
-                console.error("Erro de permissão ou leitura:", err);
-                const tbody = document.getElementById('results-table-body');
-                if(tbody) tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400">Erro de permissão no banco de dados.</td></tr>`;
+                console.error("Erro ao ler resultados:", err);
             });
         }
         
-        init();
+        // Garante que o script rode após o carregamento da janela
+        window.onload = () => {
+            init();
+        };
     </script>
 </body>
 </html>
