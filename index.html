@@ -21,7 +21,6 @@
         button:disabled { opacity: 0.5; cursor: not-allowed; }
         textarea { resize: none; min-height: 120px; }
         
-        /* Ajuste para imagem na home */
         .hero-image {
             background: linear-gradient(45deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2)), url('https://images.unsplash.com/photo-1579208575657-c595a05383b7?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
@@ -41,14 +40,14 @@
                         <i class="fas fa-shield-halved text-white text-lg"></i>
                     </div>
                     <div>
-                        <h1 class="font-extrabold text-lg tracking-tighter">POLÍCIA CIVIL</h1>
+                        <h1 class="font-extrabold text-lg tracking-tighter text-white">POLÍCIA CIVIL</h1>
                         <p class="text-[8px] text-sky-400 font-bold tracking-widest uppercase">Portal de Recrutamento</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-6">
-                    <button onclick="window.showSection('home')" class="hover:text-sky-400 text-sm font-medium transition-colors">Início</button>
-                    <button onclick="window.showSection('concursos')" class="hover:text-sky-400 text-sm font-medium transition-colors">Concursos</button>
-                    <button onclick="window.showSection('resultados')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-sm font-bold btn-hover border border-slate-600">
+                    <button onclick="window.showSection('home')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Início</button>
+                    <button onclick="window.showSection('concursos')" class="hover:text-sky-400 text-sm font-medium transition-colors text-white">Concursos</button>
+                    <button onclick="window.showSection('resultados')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-sm font-bold btn-hover border border-slate-600 text-white">
                         <i class="fas fa-list-check mr-2"></i>Resultados
                     </button>
                 </div>
@@ -56,12 +55,12 @@
         </div>
     </nav>
 
-    <!-- Seção Home com Texto Solicitado e Imagem -->
+    <!-- Home Section -->
     <section id="home-section" class="pt-32 pb-20 px-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
                 <span class="text-sky-400 font-bold tracking-widest text-sm uppercase">Unidade de Inteligência</span>
-                <h2 class="text-5xl md:text-7xl font-black mt-4 leading-tight">Carreira Policial <br><span class="gradient-text">Inicia Aqui.</span></h2>
+                <h2 class="text-5xl md:text-7xl font-black mt-4 leading-tight text-white">Carreira Policial <br><span class="gradient-text">Inicia Aqui.</span></h2>
                 <p class="mt-6 text-gray-400 text-lg leading-relaxed">
                     Acesse os editais abertos, realize sua inscrição para a D.O.A e acompanhe sua classificação em tempo real através do nosso sistema integrado.
                 </p>
@@ -85,14 +84,14 @@
         </div>
     </section>
 
-    <!-- Seção Concursos -->
+    <!-- Concursos Section -->
     <section id="concursos-section" class="hidden pt-32 pb-20 px-6">
         <div class="max-w-5xl mx-auto">
             <div class="glass p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 border-l-8 border-l-sky-500">
                 <div class="flex items-center gap-6">
                     <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center"><i class="fas fa-helicopter text-sky-400 text-3xl"></i></div>
                     <div>
-                        <h3 class="text-2xl font-bold">D.O.A - Divisão Operacional Aérea</h3>
+                        <h3 class="text-2xl font-bold text-white">D.O.A - Divisão Operacional Aérea</h3>
                         <p class="text-gray-400">Processo Seletivo D.O.A - Edital 2024</p>
                     </div>
                 </div>
@@ -101,10 +100,10 @@
         </div>
     </section>
 
-    <!-- Seção Resultados -->
+    <!-- Resultados Section -->
     <section id="resultados-section" class="hidden pt-32 pb-20 px-6">
         <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-black mb-10">Classificação <span class="text-sky-400">Geral</span></h2>
+            <h2 class="text-4xl font-black mb-10 text-white">Classificação <span class="text-sky-400">Geral</span></h2>
             <div class="glass rounded-3xl overflow-hidden">
                 <table class="w-full text-left">
                     <thead class="bg-slate-800/50">
@@ -123,7 +122,7 @@
         </div>
     </section>
 
-    <!-- Seção Exame -->
+    <!-- Exam Section -->
     <section id="exam-section" class="hidden pt-32 pb-20 px-6">
         <div class="max-w-2xl mx-auto">
             <div class="glass p-10 rounded-3xl shadow-2xl">
@@ -142,13 +141,13 @@
         </div>
     </section>
 
-    <!-- Modal de Sucesso -->
+    <!-- Success Modal -->
     <div id="success-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6 backdrop-blur-sm">
         <div class="glass max-w-md w-full p-10 rounded-3xl text-center border-t-4 border-t-green-500">
             <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-lg"><i class="fas fa-check"></i></div>
-            <h3 class="text-2xl font-bold mb-2">Protocolo Recebido!</h3>
+            <h3 class="text-2xl font-bold mb-2 text-white">Protocolo Recebido!</h3>
             <p class="text-gray-400 mb-6 text-sm">Suas respostas foram processadas e armazenadas no sistema central da Polícia Civil.</p>
-            <button onclick="window.showSection('resultados'); window.hideModal();" class="w-full bg-sky-600 hover:bg-sky-500 py-4 rounded-xl font-bold transition-all">Ver Classificação</button>
+            <button onclick="window.showSection('resultados'); window.hideModal();" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-4 rounded-xl font-bold transition-all">Ver Classificação</button>
         </div>
     </div>
 
@@ -157,25 +156,28 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyBtkW8b8D6FDG5CPa1eD3FQwGBdbeSnHls",
+        // Firebase Configuração - Utilizando variáveis de ambiente do Canvas se disponíveis
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+          apiKey: "", 
           authDomain: "base-d053f.firebaseapp.com",
           projectId: "base-d053f",
           storageBucket: "base-d053f.firebasestorage.app",
           messagingSenderId: "72644640420",
-          appId: "1:72644640420:web:ae28ae4a3579b18bcdf031",
-          measurementId: "G-3YQTZ7EL54"
+          appId: "1:72644640420:web:ae28ae4a3579b18bcdf031"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const collectionPath = "provas_doa"; 
+        
+        // Regra do Canvas: Caminho deve ser /artifacts/{appId}/public/data/{collection}
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-pc-rp';
+        const docRef = collection(db, 'artifacts', appId, 'public', 'data', 'provas_doa');
 
         let currentStep = 0;
         let userAnswers = {};
+        let user = null;
 
-        // PERGUNTAS MANTIDAS: 4 ALTERNATIVAS + 2 ABERTAS
         const questions = [
             { id: 1, label: "Nome Completo (RP):", type: "text", correct: null },
             { 
@@ -264,7 +266,14 @@
             window.scrollTo(0,0);
         };
 
-        window.startExam = () => { currentStep = 0; userAnswers = {}; window.showSection('exam'); renderQuestions(); updateStep(); };
+        window.startExam = () => { 
+            currentStep = 0; 
+            userAnswers = {}; 
+            window.showSection('exam'); 
+            renderQuestions(); 
+            updateStep(); 
+        };
+
         window.hideModal = () => document.getElementById('success-modal').classList.add('hidden');
 
         function renderQuestions() {
@@ -317,6 +326,11 @@
         window.prevStep = () => { currentStep--; updateStep(); };
 
         document.getElementById('submit-btn').onclick = async () => {
+            if (!user) {
+                alert("Sessão não autenticada. Aguarde um momento...");
+                return;
+            }
+
             const qLast = questions[currentStep];
             if(qLast.type === 'textarea') {
                 userAnswers[currentStep] = document.getElementById(`ans-${currentStep}`).value;
@@ -340,25 +354,31 @@
             const score = Math.round((acertos / totalAuto) * 100);
 
             try {
-                await addDoc(collection(db, collectionPath), {
-                    nome: userAnswers[0] || "Candidato Sem Nome",
+                await addDoc(docRef, {
+                    nome: userAnswers[0] || "Candidato",
                     taxa: score,
                     abertas: { q11: userAnswers[10] || "", q12: userAnswers[11] || "" },
-                    data: serverTimestamp()
+                    data: serverTimestamp(),
+                    userId: user.uid
                 });
                 document.getElementById('success-modal').classList.remove('hidden');
             } catch (e) { 
-                console.error(e);
-                alert("Erro crítico ao salvar no servidor."); 
+                console.error("Erro no Firebase:", e);
+                alert("Erro ao salvar! Verifique sua conexão."); 
+            } finally {
+                btn.disabled = false; 
+                btn.innerText = "Enviar Prova";
             }
-            btn.disabled = false; btn.innerText = "Enviar Prova";
         };
 
         async function init() {
             try {
-                await signInAnonymously(auth);
-                const q = query(collection(db, collectionPath));
-                onSnapshot(q, (snap) => {
+                // Autenticação obrigatória antes de qualquer operação
+                const cred = await signInAnonymously(auth);
+                user = cred.user;
+
+                // Listener para a tabela de resultados com tratamento de erro
+                onSnapshot(docRef, (snap) => {
                     const results = [];
                     snap.forEach(doc => results.push(doc.data()));
                     results.sort((a,b) => (b.taxa || 0) - (a.taxa || 0));
@@ -369,7 +389,7 @@
                             <td class="p-5 font-mono text-gray-500">#${i+1}</td>
                             <td class="p-5">
                                 <div class="font-bold text-white">${r.nome}</div>
-                                <div class="text-[10px] text-gray-500">POLÍCIA CIVIL RP</div>
+                                <div class="text-[10px] text-gray-500 uppercase">D.O.A - RP</div>
                             </td>
                             <td class="p-5 text-center text-sky-400 font-bold">${r.taxa}%</td>
                             <td class="p-5 text-right font-bold ${r.taxa >= 70 ? 'text-green-500' : 'text-red-500'}">
@@ -377,8 +397,13 @@
                             </td>
                         </tr>
                     `).join('') || '<tr><td colspan="4" class="p-10 text-center text-gray-500">Nenhum registro encontrado.</td></tr>';
+                }, (err) => {
+                    console.error("Erro no Listener:", err);
                 });
-            } catch (err) { console.error(err); }
+
+            } catch (err) { 
+                console.error("Erro na inicialização:", err); 
+            }
         }
         init();
     </script>
