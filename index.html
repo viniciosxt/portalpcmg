@@ -45,6 +45,7 @@
         const Award = (props) => <IconBase {...props}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></IconBase>;
         const Search = (props) => <IconBase {...props}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></IconBase>;
         const FileText = (props) => <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></IconBase>;
+        const Crosshair = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></IconBase>;
 
         const Helicopter = ({ className }) => (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -66,7 +67,7 @@
         );
 
         // ==========================================
-        // ÁREA DO ADMIN: PERGUNTAS E RESULTADOS
+        // ÁREA DO ADMIN: PERGUNTAS DE OPERADOR
         // ==========================================
         const DOA_QUESTIONS = [
             {
@@ -183,28 +184,168 @@
         ];
 
         // ==========================================
+        // ÁREA DO ADMIN: PERGUNTAS DE ATIRADOR
+        // ==========================================
+        const ATIRADOR_QUESTIONS = [
+            {
+                id: 0,
+                type: 'short',
+                question: "IDENTIFICAÇÃO: Informe seu Nome Completo e ID (Passaporte) na cidade.",
+            },
+            {
+                id: 1,
+                type: 'multiple',
+                question: "Como Atirador Aerotático, qual é a principal Regra de Engajamento para autorizar um disparo letal a partir da aeronave?",
+                options: [
+                    "Atirar imediatamente nos pneus de qualquer veículo em fuga para forçar a parada.",
+                    "Apenas quando houver risco iminente de morte à tripulação, aos agentes de solo ou a civis, e com o fundo do alvo limpo.",
+                    "Sempre que o suspeito estiver armado, mesmo que a arma esteja guardada ou apontada para baixo.",
+                    "Quando o veículo suspeito entrar em uma comunidade para evitar que eles fujam ou se escondam."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 2,
+                type: 'multiple',
+                question: "Ao realizar a visada (mirar) de um suspeito em movimento em via pública, qual o fator externo MAIS crítico a ser considerado antes do disparo?",
+                options: [
+                    "A velocidade máxima que o helicóptero consegue atingir no acompanhamento.",
+                    "A presença de civis na linha de tiro (fundo do alvo) e o risco de danos colaterais (ricochete).",
+                    "O modelo e o valor do veículo que o suspeito está dirigindo.",
+                    "Garantir que a câmera do helicóptero está focada para o relatório do RP."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 3,
+                type: 'multiple',
+                question: "O piloto comanda uma manobra evasiva brusca e grita 'CESSAR FOGO!'. Qual a sua ação imediata?",
+                options: [
+                    "Efetuar um último disparo rápido antes de recolher a arma.",
+                    "Questionar o piloto no rádio o motivo da ordem antes de obedecer.",
+                    "Tirar imediatamente o dedo do gatilho, recolher a arma para dentro e focar na segurança da aeronave.",
+                    "Ignorar o piloto, pois o atirador tem a palavra final sobre o engajamento."
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 4,
+                type: 'multiple',
+                question: "Qual deve ser o estado da sua arma longa enquanto a aeronave está apenas em patrulhamento preventivo (sem ocorrência ativa)?",
+                options: [
+                    "Destravada, dedo no gatilho, apontada para a rua o tempo todo.",
+                    "Travada, apontada para cima (teto da aeronave) para ficar mais fácil de puxar em caso de ataque.",
+                    "Travada, dedo fora do gatilho, cano apontado para fora/baixo em ângulo total de segurança.",
+                    "Descarregada, sem carregador inserido, guardada na mochila."
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 5,
+                type: 'multiple',
+                question: "Durante um acompanhamento, um passageiro do veículo suspeito coloca um fuzil para fora da janela e atira contra as viaturas de solo. Qual a modulação correta do atirador?",
+                options: [
+                    "Calar a boca, não usar a rádio e apenas atirar nele para fazer surpresa.",
+                    "'Águia 01, suspeito efetuando disparos de arma longa contra guarnições, iniciando engajamento, fogo liberado!'",
+                    "'Atenção viaturas, recuem que o Águia vai resolver o problema agora com tiros.'",
+                    "'Copom, avisei que eles estavam armados, socorro.'"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 6,
+                type: 'multiple',
+                question: "Caso você precise recarregar a sua arma ou sofra uma pane (encravamento) durante um confronto aéreo, o que deve modular na rádio/intercom?",
+                options: [
+                    "'Águia 01 sem visual do alvo, vou procurar a munição na bolsa.'",
+                    "'Atirador recarregando / Pane na arma, sem cobertura letal no momento!'",
+                    "Não modular nada para não demonstrar fraqueza aos suspeitos caso estejam na mesma rádio.",
+                    "'Piloto, desce a nave que minha arma quebrou!'"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 7,
+                type: 'multiple',
+                question: "O Águia 01 acompanha um veículo suspeito. O alvo para em um sinal vermelho e existem vários civis ao redor. O suspeito aponta a arma para fora. O que você faz?",
+                options: [
+                    "Efetua o disparo imediatamente de cima para baixo para neutralizar a ameaça rápido.",
+                    "Informa o risco letal, porém NÃO engaja com disparo aéreo devido ao alto risco de atingir civis (fundo sujo). Mantém visual e orienta o solo.",
+                    "Pede para o piloto realizar um rasante batendo no teto do carro do suspeito.",
+                    "Dá um tiro de aviso no capô do carro do suspeito para assustá-lo."
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 8,
+                type: 'multiple',
+                question: "Ao confirmar que um suspeito foi atingido com sucesso e a ameaça armada cessou, qual a modulação padrão recomendada?",
+                options: [
+                    "'Alvo neutralizado, ameaça cessada, Águia 01 suspendendo fogo.'",
+                    "'Mais um pra conta do Águia, pode chamar o IML de imediato.'",
+                    "'Alvo derrubado, atirador é brabo!'",
+                    "'Copom, encerramos a ocorrência por aqui, estamos voltando pra base.'"
+                ],
+                correctAnswer: 0
+            },
+            {
+                id: 9,
+                type: 'open',
+                question: "DISCURSIVA: O cargo de Atirador Aerotático exige extremo controle emocional e frieza. Descreva as qualidades que você possui que o tornam apto para não cometer erros sob forte estresse."
+            },
+            {
+                id: 10,
+                type: 'open',
+                question: "DISCURSIVA: Descreva uma situação no RP (Roleplay) em que, mesmo com o suspeito portando uma arma longa, a decisão MAIS CORRETA do Atirador é NÃO EFETUAR o disparo."
+            }
+        ];
+
+        // ==========================================
+        // ESTRUTURA DOS CURSOS
+        // ==========================================
+        const COURSES_INFO = {
+            doa: {
+                key: 'doa',
+                title: 'Processo Seletivo D.O.A.',
+                subtitle: 'Divisão Operacional Aérea - Operador',
+                description: 'Processo seletivo interno para formação de operadores aerotáticos da PCMG. Exige conhecimentos técnicos e doutrina de voo.',
+                icon: Helicopter,
+                questions: DOA_QUESTIONS,
+                webhookTitle: '🚁 Nova Ficha D.O.A. (Operador) Recebida!'
+            },
+            atirador: {
+                key: 'atirador',
+                title: 'Especialização em Tiro Aéreo',
+                subtitle: 'Divisão Operacional Aérea - Atirador de Elite',
+                description: 'Curso de especialização para Marksman (Atirador) Aerotático. Exige doutrina de engajamento, segurança e balística básica.',
+                icon: Crosshair,
+                questions: ATIRADOR_QUESTIONS,
+                webhookTitle: '🎯 Nova Ficha D.O.A. (Atirador) Recebida!'
+            }
+        };
+
+        // ==========================================
         // CONFIGURAÇÃO DO DISCORD WEBHOOK
         // ==========================================
-        // COLE O LINK DO SEU WEBHOOK ABAIXO ENTRE AS ASPAS DUPLAS
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1494100937667510272/sQ5G-fwKT3emZpZeY4ZaHJJtxSLhxrhlueM_RpQfAmtOitBKdyN1XP2BDJ19wX3ppBoN"; 
 
         // Tabela estática da aba Resultados (apenas para simulação do RP)
         const MOCK_RESULTS = [
             { id: '1029', name: 'Arthur S. Moreira', role: 'D.O.A - Operador', status: 'Aprovado', score: '90/100', date: '15/04/2026' },
-            { id: '1030', name: 'Lucas P. Silva', role: 'D.O.A - Operador', status: 'Aprovado', score: '80/100', date: '14/04/2026' },
+            { id: '1030', name: 'Lucas P. Silva', role: 'D.O.A - Atirador', status: 'Aprovado', score: '80/100', date: '14/04/2026' },
             { id: '1031', name: 'Marcos R. Gomes', role: 'D.O.A - Piloto', status: 'Reprovado', score: '50/100', date: '12/04/2026' },
             { id: '1032', name: 'Tiago C. Alencar', role: 'Investigador (G.O.E)', status: 'Aprovado', score: '95/100', date: '10/04/2026' },
             { id: '1033', name: 'Felipe J. Martins', role: 'D.O.A - Operador', status: 'Reprovado', score: '60/100', date: '09/04/2026' },
         ];
 
         // Função que envia os resultados da prova finalizada para o Discord
-        async function sendToDiscord(answers) {
+        async function sendToDiscord(answers, courseKey) {
             if (!DISCORD_WEBHOOK_URL) {
                 console.log("Webhook não configurado. Resultados não enviados.");
                 return;
             }
 
-            // Puxa as informações formatadas
+            const courseInfo = COURSES_INFO[courseKey];
             const identificacao = answers.find(a => a.questionId === 0)?.answer || "Desconhecido";
             const objectiveAnswers = answers.filter(a => a.type === 'multiple');
             const score = objectiveAnswers.filter(a => a.isCorrect).length;
@@ -212,14 +353,14 @@
             const openAnswers = answers.filter(a => a.type === 'open');
 
             const embed = {
-                title: "🚁 Nova Ficha D.O.A. Recebida!",
+                title: courseInfo.webhookTitle,
                 description: "Um candidato acabou de finalizar o exame teórico no Portal da Acadepol.",
-                color: isApproved ? 0x22c55e : 0xef4444, // Verde se aprovado, Vermelho se reprovado
+                color: isApproved ? 0x22c55e : 0xef4444,
                 fields: [
                     { name: "👤 Identificação", value: identificacao, inline: false },
                     { name: "📊 Fase Teórica", value: `${score} / 8 acertos\nStatus: **${isApproved ? 'APROVADO' : 'REPROVADO'}**`, inline: false },
-                    { name: "📝 Motivação (Q9)", value: openAnswers[0]?.answer || "Não respondeu.", inline: false },
-                    { name: "📝 Por que escolher você? (Q10)", value: openAnswers[1]?.answer || "Não respondeu.", inline: false }
+                    { name: "📝 Questão Discursiva (Q9)", value: openAnswers[0]?.answer || "Não respondeu.", inline: false },
+                    { name: "📝 Questão Discursiva (Q10)", value: openAnswers[1]?.answer || "Não respondeu.", inline: false }
                 ],
                 footer: { text: "Acadepol - Polícia Civil de Minas Gerais" },
                 timestamp: new Date().toISOString()
@@ -243,9 +384,11 @@
 
         function App() {
             const [currentPage, setCurrentPage] = useState('home');
+            const [currentCourse, setCurrentCourse] = useState(null);
 
-            const navigate = (page) => {
+            const navigate = (page, courseKey = null) => {
                 window.scrollTo(0, 0);
+                if (courseKey) setCurrentCourse(courseKey);
                 setCurrentPage(page);
             };
 
@@ -280,7 +423,7 @@
                                         </button>
                                         <button 
                                             onClick={() => navigate('concursos')}
-                                            className={`text-sm font-semibold transition-colors hover:text-white ${currentPage.includes('concursos') || currentPage.includes('doa') ? 'text-white' : 'text-slate-400'}`}
+                                            className={`text-sm font-semibold transition-colors hover:text-white ${currentPage.includes('concursos') || currentPage.includes('quiz') ? 'text-white' : 'text-slate-400'}`}
                                         >
                                             Concursos
                                         </button>
@@ -306,8 +449,8 @@
                     <main className="flex-grow">
                         {currentPage === 'home' && <HomeView navigate={navigate} />}
                         {currentPage === 'concursos' && <ConcursosView navigate={navigate} />}
-                        {currentPage === 'doa_intro' && <DoaIntroView navigate={navigate} />}
-                        {currentPage === 'doa_quiz' && <DoaQuizView navigate={navigate} />}
+                        {currentPage === 'quiz_intro' && <QuizIntroView navigate={navigate} courseKey={currentCourse} />}
+                        {currentPage === 'quiz_active' && <QuizView navigate={navigate} courseKey={currentCourse} />}
                         {currentPage === 'resultados' && <ResultadosView />}
                     </main>
 
@@ -346,7 +489,7 @@
                             </h1>
                             
                             <p className="text-slate-400 text-lg mb-10 max-w-md leading-relaxed">
-                                Acesse os editais abertos, realize sua inscrição para a D.O.A e acompanhe sua classificação em tempo real através do sistema integrado da Polícia Civil de Minas Gerais.
+                                Acesse os editais abertos, realize sua inscrição para as especializações e acompanhe sua classificação em tempo real através do sistema integrado.
                             </p>
                             
                             <div className="flex flex-wrap gap-4">
@@ -421,6 +564,8 @@
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        {/* CARD 1: D.O.A OPERADOR */}
                         <div className="bg-[#18181b] border-2 border-red-600/50 rounded-2xl overflow-hidden shadow-xl shadow-red-900/10 hover:border-red-500 transition-colors group flex flex-col">
                             <div className="bg-[#0a0a0b] p-6 border-b border-slate-800 flex items-center justify-between">
                                 <div className="bg-red-600/10 p-3 rounded-xl border border-red-600/20">
@@ -432,13 +577,11 @@
                             </div>
                             <div className="p-6 flex-grow flex flex-col justify-between">
                                 <div>
-                                    <h2 className="text-xl font-bold text-white mb-2">Divisão Operacional Aérea (D.O.A)</h2>
-                                    <p className="text-sm text-slate-400 mb-6">
-                                        Processo seletivo interno para formação de operadores aerotáticos da PCMG. Exige conhecimentos técnicos e doutrina de voo.
-                                    </p>
+                                    <h2 className="text-xl font-bold text-white mb-2">{COURSES_INFO.doa.title}</h2>
+                                    <p className="text-sm text-slate-400 mb-6">{COURSES_INFO.doa.description}</p>
                                 </div>
                                 <button 
-                                    onClick={() => navigate('doa_intro')}
+                                    onClick={() => navigate('quiz_intro', 'doa')}
                                     className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg flex justify-center items-center space-x-2 transition-all"
                                 >
                                     <span>Acessar Edital e Prova</span>
@@ -447,6 +590,32 @@
                             </div>
                         </div>
 
+                        {/* CARD 2: D.O.A ATIRADOR (NOVO) */}
+                        <div className="bg-[#18181b] border-2 border-red-600/50 rounded-2xl overflow-hidden shadow-xl shadow-red-900/10 hover:border-red-500 transition-colors group flex flex-col">
+                            <div className="bg-[#0a0a0b] p-6 border-b border-slate-800 flex items-center justify-between">
+                                <div className="bg-red-600/10 p-3 rounded-xl border border-red-600/20">
+                                    <Crosshair className="w-8 h-8 text-red-500" />
+                                </div>
+                                <span className="bg-green-500/10 text-green-500 border border-green-500/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                    Inscrições Abertas
+                                </span>
+                            </div>
+                            <div className="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-xl font-bold text-white mb-2">{COURSES_INFO.atirador.title}</h2>
+                                    <p className="text-sm text-slate-400 mb-6">{COURSES_INFO.atirador.description}</p>
+                                </div>
+                                <button 
+                                    onClick={() => navigate('quiz_intro', 'atirador')}
+                                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg flex justify-center items-center space-x-2 transition-all"
+                                >
+                                    <span>Acessar Edital e Prova</span>
+                                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* CARD 3: INVESTIGADOR GOE */}
                         <div className="bg-[#18181b] border border-slate-800 rounded-2xl overflow-hidden opacity-75 flex flex-col">
                             <div className="bg-[#0a0a0b] p-6 border-b border-slate-800 flex items-center justify-between">
                                 <div className="bg-slate-800 p-3 rounded-xl">
@@ -468,6 +637,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             );
@@ -553,9 +723,13 @@
         }
 
         // ==========================================
-        // VIEW: D.O.A INTRODUÇÃO
+        // VIEW: INTRODUÇÃO DA PROVA GENÉRICA
         // ==========================================
-        function DoaIntroView({ navigate }) {
+        function QuizIntroView({ navigate, courseKey }) {
+            if (!courseKey) { navigate('concursos'); return null; }
+            const courseInfo = COURSES_INFO[courseKey];
+            const IconComponent = courseInfo.icon;
+
             return (
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <button 
@@ -571,19 +745,19 @@
                         <div className="relative z-10">
                             <div className="flex items-center space-x-4 mb-8 pb-6 border-b border-slate-800">
                                 <div className="bg-red-600 p-4 rounded-xl shadow-lg shadow-red-900/20">
-                                    <FileText className="w-10 h-10 text-white" />
+                                    <IconComponent className="w-10 h-10 text-white" />
                                 </div>
                                 <div>
-                                    <h1 className="text-3xl font-black text-white uppercase">Processo Seletivo D.O.A.</h1>
-                                    <p className="text-red-500 font-bold tracking-wider uppercase text-sm">Polícia Civil de Minas Gerais</p>
+                                    <h1 className="text-3xl font-black text-white uppercase">{courseInfo.title}</h1>
+                                    <p className="text-red-500 font-bold tracking-wider uppercase text-sm">{courseInfo.subtitle}</p>
                                 </div>
                             </div>
 
                             <div className="prose prose-invert max-w-none text-slate-300 mb-10">
                                 <h3 className="text-xl font-bold text-white mb-4">Instruções Oficiais - Acadepol</h3>
                                 <p>
-                                    Bem-vindo candidato. Você está prestes a iniciar a avaliação para o grupamento D.O.A. 
-                                    Esta divisão exige disciplina, raciocínio rápido e amplo conhecimento das doutrinas de operações aéreas da PCMG.
+                                    Bem-vindo candidato. Você está prestes a iniciar a avaliação para a especialização de {courseInfo.subtitle}.
+                                    Esta divisão exige disciplina, raciocínio rápido e amplo conhecimento das doutrinas táticas da PCMG.
                                 </p>
                                 <ul className="list-none space-y-3 mt-6">
                                     <li className="flex items-start">
@@ -596,7 +770,7 @@
                                     </li>
                                     <li className="flex items-start">
                                         <FileText className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                                        <span>As questões discursivas serão enviadas diretamente ao Alto Comando da D.O.A para <strong>análise de perfil</strong>.</span>
+                                        <span>As questões discursivas serão enviadas diretamente ao Alto Comando para <strong>análise de perfil</strong>.</span>
                                     </li>
                                     <li className="flex items-start">
                                         <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -607,7 +781,7 @@
 
                             <div className="flex justify-end pt-6 border-t border-slate-800">
                                 <button 
-                                    onClick={() => navigate('doa_quiz')}
+                                    onClick={() => navigate('quiz_active', courseKey)}
                                     className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl flex items-center space-x-2 transition-all shadow-lg shadow-red-900/30"
                                 >
                                     <span>Estou Ciente, Iniciar Prova</span>
@@ -621,17 +795,20 @@
         }
 
         // ==========================================
-        // VIEW: D.O.A QUIZ
+        // VIEW: TELA DO QUIZ GENÉRICA
         // ==========================================
-        function DoaQuizView({ navigate }) {
+        function QuizView({ navigate, courseKey }) {
+            if (!courseKey) { navigate('concursos'); return null; }
+            const questionsData = COURSES_INFO[courseKey].questions;
+
             const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
             const [currentAnswer, setCurrentAnswer] = useState(null); 
             const [answers, setAnswers] = useState([]);
             const [isFinished, setIsFinished] = useState(false);
             const [isAnimating, setIsAnimating] = useState(false);
 
-            const question = DOA_QUESTIONS[currentQuestionIndex];
-            const progressPercentage = ((currentQuestionIndex) / DOA_QUESTIONS.length) * 100;
+            const question = questionsData[currentQuestionIndex];
+            const progressPercentage = ((currentQuestionIndex) / questionsData.length) * 100;
 
             const handleSelectOption = (index) => {
                 setCurrentAnswer(index);
@@ -657,13 +834,13 @@
                 setIsAnimating(true);
                 
                 setTimeout(() => {
-                    if (currentQuestionIndex < DOA_QUESTIONS.length - 1) {
+                    if (currentQuestionIndex < questionsData.length - 1) {
                         setCurrentQuestionIndex(currentQuestionIndex + 1);
                         setCurrentAnswer(null); 
                     } else {
                         setIsFinished(true);
-                        // CHAMA A FUNÇÃO PARA ENVIAR AO DISCORD ASSIM QUE TERMINA
-                        sendToDiscord(newAnswers);
+                        // ENVIAR AO DISCORD COM A CHAVE DO CURSO
+                        sendToDiscord(newAnswers, courseKey);
                     }
                     setIsAnimating(false);
                 }, 400); 
@@ -716,7 +893,7 @@
                                         <FileText className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
                                         <p className="text-sm text-slate-300">
                                             <strong className="text-white">Próximos Passos:</strong> Suas respostas discursivas foram salvas no sistema e encaminhadas ao Alto Comando. 
-                                            Aguarde a leitura do seu perfil e a convocação oficial no painel de Resultados para o Teste de Voo (Fase Prática).
+                                            Aguarde a leitura do seu perfil e a convocação oficial no painel de Resultados para o teste prático da especialização.
                                         </p>
                                     </div>
                                 )}
@@ -745,7 +922,7 @@
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="mb-8">
                         <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">
-                            <span>Questão {currentQuestionIndex + 1} de {DOA_QUESTIONS.length}</span>
+                            <span>Questão {currentQuestionIndex + 1} de {questionsData.length}</span>
                             <span className="text-red-500">{Math.round(progressPercentage)}% Concluído</span>
                         </div>
                         <div className="w-full bg-[#18181b] rounded-full h-3 overflow-hidden border border-slate-800">
@@ -844,7 +1021,7 @@
                                     }
                                 `}
                             >
-                                <span>{currentQuestionIndex === DOA_QUESTIONS.length - 1 ? 'Enviar Prova' : 'Próxima Questão'}</span>
+                                <span>{currentQuestionIndex === questionsData.length - 1 ? 'Enviar Prova' : 'Próxima Questão'}</span>
                                 <ChevronRight className="w-5 h-5" />
                             </button>
                         </div>
